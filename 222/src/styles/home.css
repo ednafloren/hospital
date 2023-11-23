@@ -1,0 +1,83 @@
+.col1{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 50px;
+    margin-top: 40PX;
+    margin-left: 40px;
+}
+
+.cards{
+    /* display: grid; */
+    padding-left: 15px;
+    /* grid-template-columns: auto auto ; */
+   width: 300px;
+    background-color: rgb(65, 64, 64);
+    color:white;
+    padding-left: 20px;
+    padding-right: 70px;
+    /* padding-right: 1px; */
+    margin-left: 0px;
+}
+.col1 h3{
+    color: white;
+    margin-top: 10px;
+}
+.total{
+    display: grid;
+    grid-template-columns: auto auto ;
+    column-gap: 10px;
+    margin-top: 20PX;
+   
+}
+
+.icorep{
+    width:20px;
+    height: 20px;
+ margin-top: 10px;
+    text-align: left;
+    margin-left: 100px;
+}
+.tmed h3{
+    margin-top: 10PX;
+    color: white;
+
+}
+/* report column */
+.report{
+    display: grid;
+    grid-template-columns: auto auto ;
+    column-gap: 10px;
+    margin-bottom: 10PX;
+    align-self:center;
+
+}
+.number{
+
+    padding-top: 0px;
+    text-align: left;
+    margin-left: 180px;
+
+}
+
+@media   (min-width:481px) and (max-width:768px){
+    .col1{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+   
+        height: 50vh; 
+        width: 300px;
+}
+.col1> *:not(:last-child){
+    margin-bottom: 10px;
+}
+.new{
+    margin-top: 100px;
+}
+.cards{
+    width: 250px;
+    margin-right: 20px;
+}
+
+    }

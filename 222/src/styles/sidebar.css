@@ -1,0 +1,57 @@
+body {
+  margin: 0;
+  /* font-family: sans-serif; */
+  background-color: #ff6600;
+}
+
+.App {
+  /* font-family: sans-serif; */
+  text-align: center;
+}
+
+#main {
+  height: 100vh; 
+   padding: 0px 0px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0px;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0px 10px;
+}
+
+nav ul li:first-child {
+  margin-left: 0px;
+}
+
+nav ul li a {
+  color: #fff;
+}
+
+nav {
+  display: flex;
+}
+
+h2,
+p {
+  color: #fff;
+}
+  
+  button {
+    padding: 10px;
+    background-color: #d61212;
+    color: #f60a0a;
+    border: none;
+    cursor: pointer;
+  }
+  
+
+  .content-before {
+    flex: 10; /* Takes up the available space before the sidebar */
+    /* Add any styling for the content before the sidebar */
+  }
+  

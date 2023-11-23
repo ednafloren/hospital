@@ -1,0 +1,70 @@
+.sidenav {
+    width: 250px;
+    transition: width 0.3s ease-in-out;
+    /* height: 100vh; */
+    background-color: rgb(58,118,172) ;
+    /* padding-top: 10px; */
+}
+ 
+.sidenavClosed {
+    composes: sidenav;
+    transition: width 0.3s ease-in-out;
+    width: 60px;
+
+}
+ 
+.sideitem {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+}
+ 
+.sidenavClosed .linkText {
+    padding-left: 16px;
+    visibility:hidden; 
+}
+
+.linkText {
+    padding-left: 16px;
+ 
+}
+.userp{
+    text-align: center;
+    color:rgb(196, 195, 195);
+    font-weight: 100;
+  }
+ .img{
+    width: 50px;
+      height: 50px;  
+  }
+ 
+.sidenavClosed .img, .sidenavClosed p {
+margin-left: 10px;
+    width: 25px;
+    height: 25px;
+    font-size: 10px;
+    text-align:center
+}
+ 
+.sideitem:hover {
+    color: aqua ;
+
+}
+
+.sideitem:focus{
+    background-color:  rgb(58, 103, 143);
+}
+ 
+.menuBtn {
+    align-self: center;
+    align-self: flex-start; 
+    justify-self: flex-end;
+    color: white;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding-left: 20px;
+}
