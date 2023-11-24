@@ -52,7 +52,7 @@ const LoginForm = () => {
 
         if (response.ok) {
           console.log('Login successful');
-          // Redirect or perform other actions after successful login
+         
           navigate('/home');
         } else {
           if (response.status === 400) {
