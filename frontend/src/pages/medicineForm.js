@@ -23,12 +23,14 @@ const MedicineForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Login Request Payload:', JSON.stringify(medicine));
+    
 
     try {
       const response = await fetch('http://127.0.0.1:5000/medicines/create/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+        
         },
         body: JSON.stringify(medicine),
       });
