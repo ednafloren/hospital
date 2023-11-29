@@ -8,7 +8,7 @@ class Medicine(db.Model):
   name:str
   unit_price:str
   image:str
-  stock:int
+  stock:str
   medicine_category_id:int
   created_by :str
   created_at :str

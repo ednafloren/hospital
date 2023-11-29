@@ -27,6 +27,8 @@ def get_all_medicines():
 @jwt_required()
 def create_new_medicine():
 
+   
+
     data = request.get_json()
     name = data['name']
     unit_price = data['unit_price']
