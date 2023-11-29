@@ -15,6 +15,8 @@ from werkzeug.security import generate_password_hash,check_password_hash
 users = Blueprint('users', __name__, url_prefix='/users')
 
 
+CORS(users, supports_credentials=True)
+
 
 
 #get all users
@@ -46,6 +48,8 @@ def create_user():
       #validations
       if not contact:
               return jsonify({'error':"Contact is required"}),400
+      elif contact==10:
+          return jsonify({'error':"Contact must be 10 numbers"}),400
       
       if not name:
               return jsonify({'error':"Name is required"}),400
@@ -67,7 +71,10 @@ def create_user():
     
       if User.query.filter_by(contact=contact).first() is not None:
         return jsonify({'error': "Phone number is already in use"}),409
-       
+      
+
+
+
 
       #creating a hashed password in the database
       hashed_password = generate_password_hash(password)
@@ -77,7 +84,53 @@ def create_user():
       db.session.add(new_user)
       db.session.commit()
       return jsonify({'message':'New user created successfully','data':new_user}),201
-        
+        # check uniqueness
+@users.route('/checkEmail', methods=['GET'])
+def check_email():
+    email = request.args.get('email')
+
+    if not email:
+        return jsonify({'error': 'Email parameter is missing'}), 400
+
+    # Check email uniqueness in your database
+    existing_user = User.query.filter_by(email=email).first()
+
+    if existing_user:
+        return jsonify({'exists': True, 'message': 'Email already exists'}), 200
+    else:
+        return jsonify({'exists': False, 'message': 'Email is unique'}), 200
+
+
+@users.route('/checkName', methods=['GET'])
+def check_name():
+    name = request.args.get('name')
+
+    if not name:
+        return jsonify({'error': 'Name parameter is missing'}), 400
+
+    # Check name uniqueness in your database
+    existing_user = User.query.filter_by(name=name).first()
+
+    if existing_user:
+        return jsonify({'exists': True, 'message': 'Name already exists'}), 200
+    else:
+        return jsonify({'exists': False, 'message': 'Name is unique'}), 200
+
+@users.route('/checkName', methods=['GET'])
+def check_contact():
+    name = request.args.get('contact')
+
+    if not name:
+        return jsonify({'error': 'Contact parameter is missing'}), 400
+
+    # Check contact uniqueness in your database
+    existing_user = User.query.filter_by(contact=name).first()
+
+    if existing_user:
+        return jsonify({'exists': True, 'message': 'Contact already exists'}), 200
+    else:
+        return jsonify({'exists': False, 'message': 'Contact is unique'}), 200
+
 
 
 
@@ -104,6 +157,7 @@ def login():
             return jsonify({"message":"Invalid password"}),400
     else:
         return jsonify({"message":"email address doesn't exist"}),400
+
 
 
 @users.route('/get/<user_id>', methods=['GET', 'PUT', 'DELETE'])

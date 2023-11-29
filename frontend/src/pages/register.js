@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 
 const RegisterForm = () => {
+  const navigate = useNavigate();
   const [register, setRegister] = useState({
     email: '',
     name: '',
@@ -35,7 +36,8 @@ const RegisterForm = () => {
   
         if (response.ok) {
           console.log('User registered successfully');
-          // Redirect or perform other actions after successful registration
+         
+          navigate('/home');
         } else {
           const data = await response.json();
   
@@ -280,7 +282,7 @@ const RegisterForm = () => {
             </label>
             {formErrors.confirmPassword && <p className='error'>{formErrors.confirmPassword}</p>}
           </div>
-
+    {/* {serverErrors && <p className='error'>{serverErrors}</p>} */}
           <div className="submitdiv">
             <button type="submit">Register</button>
           </div>
