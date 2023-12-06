@@ -33,13 +33,20 @@
 }
 .userp{
     text-align: center;
-    color:rgb(196, 195, 195);
-    font-weight: 100;
+    color:rgb(225, 224, 224);
+    font-weight: 300;
+    font-family: Arial, Helvetica, sans-serif;
+ 
   }
- .img{
+  .userp p{
+    margin-top: 1px;
+    color:rgb(193, 193, 223);
+  }
+  
+ /* .img{
     width: 50px;
       height: 50px;  
-  }
+  } */
  
 .sidenavClosed .img, .sidenavClosed p {
 margin-left: 10px;

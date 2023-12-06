@@ -205,11 +205,26 @@ def handle_user(user_id):
         db.session.delete(user)
         db.session.commit()
         return {"message": f"User {user.name} successfully deleted."} ,200
+# Add a new route to get the logged-in user details
+@users.route("/get_user_details", methods=["GET"])
+@jwt_required()
+def get_user_details():
+    current_user_id = get_jwt_identity()
+    user = User.query.get(current_user_id)
 
-@users.route('/user', methods=['GET'])
-@login_required
-def get_user():
-     return jsonify({'id': str(current_user.id), 'username': current_user.username})
+    if user:
+        user_details = {
+            "id": user.id,
+            "name": user.name,
+            "user_type": user.user_type,
+            "email": user.email,
+            "contact": user.contact,
+            "created_at": user.created_at,
+        }
+        return jsonify({"success": True, "user_details": user_details}), 200
+    else:
+        return jsonify({"success": False, "message": "User not found"}), 404
+
 
 CORS(users,supports_credentials=True)  
 # logging out a user

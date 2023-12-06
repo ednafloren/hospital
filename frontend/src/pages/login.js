@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 
+
+
+
+
 const LoginForm = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useState({
@@ -35,9 +39,13 @@ const LoginForm = () => {
     return Object.keys(errors).length === 0;
   };
 
+  const storeToken = (token) => {
+    localStorage.setItem('access_token', token);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (validateForm()) {
       try {
         const response = await fetch('http://127.0.0.1:5000/users/login', {
@@ -47,13 +55,39 @@ const LoginForm = () => {
           },
           body: JSON.stringify(login),
         });
-
+  
         const data = await response.json();
-
+  
         if (response.ok) {
           console.log('Login successful');
-         
-          navigate('/home');
+  
+          // Store the token in local storage
+          storeToken(data.access_token);
+  
+          // Fetch the user details after successful login
+          const userResponse = await fetch('http://127.0.0.1:5000/users/get_user_details', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${data.access_token}`,
+            },
+          });
+  
+          const userData = await userResponse.json();
+  
+          if (userResponse.ok) {
+            console.log('User details fetched successfully', userData.user_details);
+  
+            // Store the user data in local storage
+            localStorage.setItem('user', JSON.stringify(userData.user_details));
+  
+            // Set the user details in the state or wherever you need
+            // For example, you can use React context or set it in the component state
+            // setLoggedInUser(userData.user_details);
+  
+            navigate('/home');
+          } else {
+            console.error('Error fetching user details:', userData.message);
+          }
         } else {
           if (response.status === 400) {
             // Bad Request
@@ -66,12 +100,13 @@ const LoginForm = () => {
           }
         }
       } catch (error) {
-        console.error('Error logging in:', error.message);
+        console.error('Error during login:', error.message);
       }
     } else {
       console.log('Form has validation errors. Cannot submit.');
     }
   };
+
 
   return (
     <div className="login-form">
