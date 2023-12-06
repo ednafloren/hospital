@@ -60,6 +60,7 @@ const LoginForm = () => {
   
         if (response.ok) {
           console.log('Login successful');
+<<<<<<< HEAD
   
           // Store the token in local storage
           storeToken(data.access_token);
@@ -88,6 +89,15 @@ const LoginForm = () => {
           } else {
             console.error('Error fetching user details:', userData.message);
           }
+=======
+<<<<<<< HEAD
+          
+          // Redirect or perform other actions after successful login
+=======
+         
+>>>>>>> 56bbc507b214314cf0cf88643c714ecd37d0ceff
+          navigate('/home');
+>>>>>>> 01eb86cfe2f99e93490c0f44573dac8fd7acd63c
         } else {
           if (response.status === 400) {
             // Bad Request

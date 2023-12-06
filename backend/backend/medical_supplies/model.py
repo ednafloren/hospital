@@ -30,7 +30,7 @@ class MedicalSupply(db.Model):
   def __init__(self, name,image,unit_price,stock,medical_supply_category_id,created_by,created_at,updated_at):
    self.name = name
    self.image = image
-   self.unit = unit_price 
+   self.unit_price = unit_price 
    self.medical_supply_category_id = medical_supply_category_id
    self.stock = stock
    self.created_by = created_by

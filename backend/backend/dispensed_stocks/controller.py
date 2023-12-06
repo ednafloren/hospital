@@ -9,7 +9,7 @@ from flask_jwt_extended import jwt_required
 
 
 # Creating a blue print for dispensed stock, where dispensed stock is the resource
-dispensed_stocks = Blueprint('dispensed_stock',__name__,url_prefix='/dispensed_stock')
+dispensed_stocks = Blueprint('dispensed_stocks',__name__,url_prefix='/dispensed_stocks')
 
 #Getting all orders
 @dispensed_stocks.route("/")
@@ -21,7 +21,7 @@ def get_all_dispensed_stocks():
             "total":len(dispensed_stocks)
         }),200
 
-#creating districts
+#creating dispensed stocks
 
 
 @dispensed_stocks.route('/create', methods= ['POST'])
@@ -63,7 +63,7 @@ def create_new_medicine():
     db.session.commit()
     return jsonify({'message':'New dispensed stock created sucessfully','data': [new_dispensed_stock.id,new_dispensed_stock.medical_supply_quantity, new_dispensed_stock.medicine_quantity,new_dispensed_stock.status,new_dispensed_stock.created_by,new_dispensed_stock.created_at,new_dispensed_stock.updated_at,new_dispensed_stock.medical_supply_id,new_dispensed_stock.medicine_id]}),201
 
-@dispensed_stocks.route('/order/<id>', methods=['GET'])
+@dispensed_stocks.route('/dispensed_stocks/<id>', methods=['GET'])
 def get_dispensed_stock(id):
     dispensed_stock_id= DispensedStock.query.get(id)
     results = {
