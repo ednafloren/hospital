@@ -69,7 +69,7 @@ def get_stock_orders(id):
         
         "status":stock_order_id.status,
         "medical_supply_id":stock_order_id.medical_supply_id,
-        "medicical_supply_quantity": stock_order_id.medical_supply_quantity,
+        "medical_supply_quantity": stock_order_id.medical_supply_quantity,
         "medicine_id":stock_order_id.medicine_id,
         "medicine_quantity": stock_order_id.medicine_quantity,
         "created_by":stock_order_id.created_by,
