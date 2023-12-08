@@ -60,12 +60,12 @@ const LoginForm = () => {
   
         if (response.ok) {
           console.log('Login successful');
-<<<<<<< HEAD
+
           
           // Redirect or perform other actions after successful login
 
           navigate('/home');
->>>>>>> 01eb86cfe2f99e93490c0f44573dac8fd7acd63c
+
         } else {
           if (response.status === 400) {
             // Bad Request
