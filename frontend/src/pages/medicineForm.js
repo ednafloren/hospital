@@ -8,7 +8,7 @@ const MedicineForm = () => {
     quantity: '',
     unitprice: '',
     totalprice: '',
-    medexpiry: '',
+    expiry_date: '',
     // Add more fields as needed
   });
 
@@ -93,6 +93,7 @@ const MedicineForm = () => {
             required
           />
         </div>
+        
         <div className="form-group">
           <label>Expiry Date:</label>
           <input

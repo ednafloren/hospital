@@ -66,6 +66,7 @@ const MedicineTable = () => {
             <th>Created By</th>
             <th>Created At</th>
             <th>Updated By</th>
+            <th>expiry_date</th>
           </tr>
         </thead>
         <tbody>
@@ -89,7 +90,7 @@ const MedicineTable = () => {
               <td>{item.created_by}</td>
               <td>{item.created_at}</td>
               <td>{item.updated_at}</td>
-
+              <td>{item.expiry_date}</td>
             </tr>
           )
           )}
