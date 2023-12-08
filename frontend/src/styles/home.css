@@ -2,21 +2,42 @@
     display: grid;
     grid-template-columns: auto auto auto;
     column-gap: 50px;
-    margin-top: 40PX;
+    margin-top: 100PX;
     margin-left: 40px;
 }
+/* card colors */
+.card2{
+    background-color: rgb(44, 198, 229);
+}
+.card3{
+    background-color: rgb(0, 34, 255);
+}
+.card6{
+    background-color: rgb(117, 119, 249);
+}
+.card4{
+    background-color: rgb(89, 157, 245);
+}
+.card1{
+    background-color: rgb(10, 2, 45);
+}
+.card5{
+    background-color: rgb(17, 2, 96)
+}
 
-.cards{
+
+.card1,.card2,.card3,.card4,.card5,.card6{
     /* display: grid; */
     padding-left: 15px;
     /* grid-template-columns: auto auto ; */
    width: 300px;
-    background-color: rgb(65, 64, 64);
+    /* background-color: rgb(65, 64, 64); */
     color:white;
     padding-left: 20px;
     padding-right: 70px;
     /* padding-right: 1px; */
     margin-left: 0px;
+    /* border-radius: 6px; */
 }
 .col1 h3{
     color: white;
@@ -75,9 +96,9 @@
 .new{
     margin-top: 100px;
 }
-.cards{
+/* .cards{
     width: 250px;
     margin-right: 20px;
-}
+} */
 
     }

@@ -178,6 +178,10 @@ const RegisterForm = () => {
       errors.password = 'Password is required';
     } else if (data.password.length < 6) {
       errors.password = 'Password must be at least 6 characters long';
+    } else if (!/(?=.*[A-Z])/.test(data.password)) {
+      errors.password = 'Password must contain at least one capital letter';
+    } else if (!/[!@#$%^&*(),.?":{}|<>]/.test(data.password)) {
+      errors.password = 'Password must contain at least one symbol';
     }
 
     // Validate confirmPassword

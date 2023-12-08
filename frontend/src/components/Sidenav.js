@@ -1,3 +1,6 @@
+import { Icon } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+
 import styles from "./sidenav.module.css";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -5,50 +8,29 @@ import { navData } from "../lib/navData";
 
 export default function Sidenav() {
   const [open, setOpen] = useState(true);
-
+  const [user, setUser] = useState(null);
 
   const toggleOpen = () => {
     setOpen(!open);
   };
 
-    const [user, setUser] = useState(null);
-  
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-              const response = await fetch('http://127.0.0.1:5000/users/user');
-              console.log('Response:', response);
-          
-              if (!response.ok) {
-                console.error('Request failed with status:', response.status);
-                const errorText = await response.text();
-                console.error('Error response:', errorText);
-                // Handle other non-OK responses if needed
-                return;
-              }
-          
-              const contentType = response.headers.get('content-type');
-              const responseBody = await response.text();
-              
-              console.log('Response Body:', responseBody);
-          
-              if (contentType && contentType.includes('application/json')) {
-                const data = JSON.parse(responseBody);
-                setUser(data.user);
-              } else {
-                console.error('Invalid JSON response');
-                // Handle non-JSON response (possibly an error page)
-              }
-            } catch (error) {
-              console.error('Fetch user error:', error);
-              // Handle other fetch errors
-            }
-          };
-          
-  
-      fetchUser();
-    }, []);
-  
+  useEffect(() => {
+    try {
+      const userString = localStorage.getItem('user');
+
+      if (userString) {
+        const storedUser = JSON.parse(userString);
+        setUser(storedUser);
+      } else {
+        console.error('User data not found in localStorage');
+        // Handle the case where user data is not found in localStorage
+      }
+    } catch (error) {
+      console.error('Error parsing user data:', error);
+      // Handle the error as needed
+    }
+  }, []);
+
   return (
     <div>
       <div className={open ? styles.sidenav : styles.sidenavClosed}>
@@ -62,20 +44,19 @@ export default function Sidenav() {
           </button>
         </div>
         <div className={styles.userp}>
-          <img
-            src="images/profile.png"
-            alt="profile logo"
-            className={styles.img}
-          />
-        {user ? (
-        <div>
-       
-          <p>Username: {user.name}</p>
-          {/* Add other user details as needed */}
-        </div>
-      ) : (
-        <p>Loading user profile...</p>
-      )}
+      
+        <Icon sx={{ fontSize: 80}}>
+  <AccountCircleIcon style={{ fontSize: 80 }}  />
+</Icon>
+
+     {user ? (
+            <div>
+              <p>{user.name}</p>
+              {/* Add other user details as needed */}
+            </div>
+          ) : (
+            <p>Loading user profile...</p>
+          )}
         </div>
 
         {navData.map((item) => (

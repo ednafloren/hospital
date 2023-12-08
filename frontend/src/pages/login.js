@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/login.css';
 
+
+
+
+
 const LoginForm = () => {
   const navigate = useNavigate();
   const [login, setLogin] = useState({
@@ -35,9 +39,13 @@ const LoginForm = () => {
     return Object.keys(errors).length === 0;
   };
 
+  const storeToken = (token) => {
+    localStorage.setItem('access_token', token);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (validateForm()) {
       try {
         const response = await fetch('http://127.0.0.1:5000/users/login', {
@@ -47,16 +55,17 @@ const LoginForm = () => {
           },
           body: JSON.stringify(login),
         });
-
+  
         const data = await response.json();
-
+  
         if (response.ok) {
           console.log('Login successful');
-
+<<<<<<< HEAD
           
           // Redirect or perform other actions after successful login
 
           navigate('/home');
+>>>>>>> 01eb86cfe2f99e93490c0f44573dac8fd7acd63c
         } else {
           if (response.status === 400) {
             // Bad Request
@@ -69,12 +78,13 @@ const LoginForm = () => {
           }
         }
       } catch (error) {
-        console.error('Error logging in:', error.message);
+        console.error('Error during login:', error.message);
       }
     } else {
       console.log('Form has validation errors. Cannot submit.');
     }
   };
+
 
   return (
     <div className="login-form">
