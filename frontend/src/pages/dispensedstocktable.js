@@ -9,7 +9,7 @@ const DispensedstockTable = () => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-      fetch('http://127.0.0.1:5000//dispensed_stock/')
+      fetch('http://127.0.0.1:5000//dispensed_stocks/')
         .then(response => {
           if (!response.ok) {
             throw new Error('Network response was not ok');

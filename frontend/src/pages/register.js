@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import '../styles/login.css';
 
 const RegisterForm = () => {
@@ -11,9 +13,13 @@ const RegisterForm = () => {
     password: '',
     confirmPassword: '',
   });
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const [inputValidation, setInputValidation] = useState({});
   const [formErrors, setFormErrors] = useState({});
   const [serverErrors, setServerErrors] = useState({});
+  const [showPassword, setShowPassword] = useState(false);
   
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -170,8 +176,18 @@ const RegisterForm = () => {
   // Validate contact
   if (!data.contact.trim()) {
     errors.contact = 'Contact is required';
-  } else if (!/^\d{10}$/.test(data.contact)) {
-    errors.contact = 'Contact must contain exactly 10 numbers';
+  }
+  else if (!/^0\d{9}$/.test(data.contact)) {
+    // If not in the Uganda phone number format
+    errors.contact = 'Invalid Uganda phone number format'; }
+  else if (!/^\+256\s?\d{9}$/.test(data.contact)) {
+  // If not in the Uganda phone number format
+  errors.contact = 'Invalid Uganda phone number format'; }
+  else if (!/^(\+|d{0})\d+$/.test(data.contact)) {
+  
+  errors.contact = 'Contact must start with "0" or "+" and be followed by digits'}
+  else if (!/^\+?\d{1,4}?\s?\d{6,15}$/.test(data.contact)) {
+    errors.contact = 'Invalid phone number format';
   }
     // Validate password
     if (!data.password.trim()) {
@@ -255,9 +271,10 @@ const RegisterForm = () => {
             {formErrors.contact && <p className='error'>{formErrors.contact}</p>}
           </div>
           <div className="form-group">
-            <label>Password:
+            <label>Password:</label>
+            <div className="password-input-container">
               <input
-                type="password"
+                type={showPassword ? 'text' : 'password'} 
                 name="password"
                 id="password"
                 placeholder="Enter Password"
@@ -267,13 +284,20 @@ const RegisterForm = () => {
                 className={` ${formErrors.password ? 'error' : ''} ${inputValidation.password ? 'error-border' : ''}`}
                 required
               />
-            </label>
+            <span
+              className={`password-toggle ${showPassword ? 'visible' : ''}`}
+              onClick={togglePasswordVisibility}
+            >
+<FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}
+ style={{ color: 'grey' }}  />            </span>
+</div>
             {formErrors.password && <p className='error'>{formErrors.password}</p>}
           </div>
           <div className="form-group">
-            <label>Confirm Password:
+            <label>Confirm Password:  </label>
+            <div className="password-input-container">
               <input
-                type="password"
+                 type={showPassword ? 'text' : 'password'} 
                 name="confirmPassword"
                 id="confirmPassword"
                 placeholder="Confirm Password"
@@ -283,7 +307,15 @@ const RegisterForm = () => {
                 className={` ${formErrors.confirmPassword ? 'error' : ''} ${inputValidation.confirmPassword ? 'error-border' : ''}`}
                 required
               />
-            </label>
+                          <span
+              className={`password-toggle ${showPassword ? 'visible' : ''}`}
+              onClick={togglePasswordVisibility}
+            >
+<FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}
+ style={{ color: 'grey' }}  />            </span>
+</div>
+        
+          
             {formErrors.confirmPassword && <p className='error'>{formErrors.confirmPassword}</p>}
           </div>
     {/* {serverErrors && <p className='error'>{serverErrors}</p>} */}

@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
 import '../styles/login.css';
 
 
@@ -14,6 +17,7 @@ const LoginForm = () => {
   });
   const [formErrors, setFormErrors] = useState({});
   const [serverError, setServerError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +26,9 @@ const LoginForm = () => {
       [name]: value,
     });
   };
-
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
   const validateForm = () => {
     let errors = {};
 
@@ -60,7 +66,7 @@ const LoginForm = () => {
   
         if (response.ok) {
           console.log('Login successful');
-<<<<<<< HEAD
+
   
           // Store the token in local storage
           storeToken(data.access_token);
@@ -89,15 +95,15 @@ const LoginForm = () => {
           } else {
             console.error('Error fetching user details:', userData.message);
           }
-=======
-<<<<<<< HEAD
+
+
           
           // Redirect or perform other actions after successful login
-=======
+
          
->>>>>>> 56bbc507b214314cf0cf88643c714ecd37d0ceff
+
           navigate('/home');
->>>>>>> 01eb86cfe2f99e93490c0f44573dac8fd7acd63c
+
         } else {
           if (response.status === 400) {
             // Bad Request
@@ -143,8 +149,9 @@ const LoginForm = () => {
           </div>
           <div className="form-group">
             <label>Password:</label>
+            <div className="password-input-container">
             <input
-              type="password"
+              type={showPassword ? 'text' : 'password'}  // Use 'text' or 'password' based on showPassword state
               name="password"
               placeholder="Enter Password"
               value={login.password}
@@ -152,7 +159,14 @@ const LoginForm = () => {
               className={formErrors.password ? 'error-border' : ''}
               required
             />
-            {formErrors.password && <p className='error'>{formErrors.password}</p>}
+            <span
+              className={`password-toggle ${showPassword ? 'visible' : ''}`}
+              onClick={togglePasswordVisibility}
+            >
+<FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}
+ style={{ color: 'grey' }}  />            </span>
+</div>
+            {formErrors.password && <p className="error">{formErrors.password}</p>}
           </div>
 
           {serverError && <p className='error'>{serverError}</p>}
@@ -178,4 +192,3 @@ const LoginForm = () => {
 };
 
 export default LoginForm;
-

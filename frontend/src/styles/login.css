@@ -1,5 +1,15 @@
 /* login.css */
+.password-input-container {
+  position: relative;
+}
 
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
 
 .login-form {
     background: #fff;
@@ -54,10 +64,7 @@
       width: 400px;
     }
     
-    input {
-      height: 25px;
-      border: none;
-    }
+
     
     .col {
       display: grid;
@@ -82,34 +89,36 @@
       margin: 20px;
     }
     
-    .form-group {
-      /* margin: 10px 0; */
-    }
-    
+  
     label {
       font-weight: bold;
     }
     
-    input,
+    /* input,
     textarea {
       width: 98%;
       padding: 5px;
       font-size: 14px;
-    }
+    } */
     
-    button {
-      background: #32659c;
+    /* button {
+      /* background: #32659c; */
+      /* background-color: aqua;
       color: #fff;
       border: none;
       border-radius: 3px;
-      padding: 10px 20px;
+      padding: 10px 80px;
       cursor: pointer;
-      align-self: end;
-    }
-    
+      align-self: end; */
+    /* } */
+     
     .submitdiv {
       text-align: right;
       margin-top: 20px;
+
+    }
+    .submitdiv button{
+      width: 100%;
     }
     
     @media (min-width: 481px) and (max-width: 768px) {
@@ -164,11 +173,7 @@ input{
     text-align: center;
     margin: 20px;
   }
-  
-  .form-group {
-    /* margin: 10px 0; */
-  }
-  
+
   label {
     font-weight: bold;
   }
@@ -184,12 +189,14 @@ input{
   
   button {
     background: #32659c;
+    width: 100%;
+ 
     color: #fff;
     border: none;
     border-radius: 3px;
     padding: 10px 20px;
     cursor: pointer;
-    align-self:end;
+    /* align-self:end; */
   }
   .submitdiv{
     text-align: right;
