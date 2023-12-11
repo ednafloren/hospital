@@ -47,6 +47,8 @@ const LoginForm = () => {
 
   const storeToken = (token) => {
     localStorage.setItem('access_token', token);
+    console.log('jwt token:',token)
+
   };
 
   const handleSubmit = async (e) => {
@@ -83,6 +85,7 @@ const LoginForm = () => {
   
           if (userResponse.ok) {
             console.log('User details fetched successfully', userData.user_details);
+         
   
             // Store the user data in local storage
             localStorage.setItem('user', JSON.stringify(userData.user_details));

@@ -3,16 +3,18 @@ import React, { useState,useEffect } from 'react';
 import '../styles/medicine.css';
 import '../styles/medicinetable.css';
 import { Link } from 'react-router-dom';
+import DeleteIcon  from '@mui/icons-material/Delete';
 
 const DispensedstockTable = () => {
   const [dispensedstock, setdispensedstock] = useState([]);
     const [error, setError] = useState(null);
+    const [items, setItems] = useState([]); // Initialize with your data
 
     useEffect(() => {
       fetch('http://127.0.0.1:5000//dispensed_stocks/')
         .then(response => {
           if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Network response wa  s not ok');
           }
           return response.json();
         })
@@ -36,6 +38,28 @@ const DispensedstockTable = () => {
     if (error) {
       return <p>{error}</p>;
     }
+    const handleDelete = async (itemId) => {
+      try {
+        // Make API request to delete item on the server
+        const response=await fetch(`http://127.0.0.1:5000/dispensed_stocks/delete/${itemId}`, {
+          method: 'DELETE',
+          // Add headers if needed
+        });
+        if (response.ok) {
+               // Update local state
+        const updatedItems = items.filter(item => item.id !== itemId);
+        setItems(updatedItems);
+          console.log('delete');
+        }
+    
+   
+      }catch (error) {
+        console.error('Error deleting item:', error);
+      }
+    };
+    
+    
+  
 
   return (
     <>
@@ -44,6 +68,7 @@ const DispensedstockTable = () => {
       <h2>Dispensed Stock</h2></div>
       <div>
 <table>
+  <thead>
 <tr>
 <th>ID</th>
 <th>Status</th>
@@ -54,13 +79,15 @@ const DispensedstockTable = () => {
 <th>Created_by</th>
 
 <th>Created_at</th>
-
 <th>Updated_by</th>
+
+<th></th>
 
 
 
 
 </tr>
+</thead>
 <tbody>
           {dispensedstock.map((item) => (
           
@@ -76,6 +103,7 @@ const DispensedstockTable = () => {
               <td>{item.created_by}</td>
               <td>{item.created_at}</td>
               <td>{item.updated_at}</td>
+              <td><DeleteIcon className='delete' onClick={() => handleDelete(item.id)}/></td>
 
             </tr>
           )

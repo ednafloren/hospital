@@ -1,10 +1,20 @@
 table {
     border-collapse: collapse;
     border-spacing: 0;
-    width: 80%;
-    border: none;
-    margin-left:30px;
+    width: 100%;
+    position: relative;
+    left: 0;
 
+    border: none;
+    /* margin:30px;
+     */
+
+  }
+  .delete{
+    color: red;
+  }
+  .EditIcon{
+    color: rgb(47, 113, 170);
   }
   
   th, td {
@@ -14,7 +24,7 @@ table {
 
   }
   th{
-    background-color: rgb(4, 4, 58);
+    background-color: rgb(128, 128, 130);
     color: white;
   }
   td{
@@ -32,7 +42,7 @@ table {
     
   body{
      background-color:rgb(222, 228, 250);
-     margin-left: 100px;
+  
   }
   a{
     text-decoration: none;
@@ -49,6 +59,87 @@ table {
     padding: 10px 20px;
  }
  .space{
-  /* background-color: aqua; */
+margin: 0px;
+
+/* width: 100%; */
  
  }
+ 
+ @media (min-width:481px) and (max-width:768px){
+  table {
+
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 50%;
+    
+    border: none;
+    margin:0px;
+     
+
+  }
+  th, td {
+
+    text-align: left;
+    padding:10px;
+    font-size: 12px;
+    /* border:1px solid black */
+
+  }
+
+    }
+      @media (min-width:769px) and (max-width:1080px) {
+        table {
+          border-collapse: collapse;
+          border-spacing: 0;
+          width: 10%;
+          
+          border: none;
+          margin:0px;
+           
+      
+        }
+        .space{
+          margin: 0px;
+          /* width: 100%; */
+           
+           }
+           th, td {
+
+            text-align: left;
+            padding:12px;
+            font-size: 18px;
+            /* border:1px solid black */
+        
+          }
+  
+      }
+        @media (min-width:300px) and (max-width:480px){
+       
+          table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 10%;
+            
+            border: none;
+            margin:0px;
+             
+        
+          }
+          .space{
+            margin: 0px;
+            /* width: 100%; */
+             
+             }
+             th, td {
+
+              text-align: left;
+              padding:8px;
+              font-size: 10px;
+              /* border:1px solid black */
+          
+            }
+            /* tr{
+              display: flex;
+            } */
+        }   
+  

@@ -18,24 +18,25 @@ return (
        <h3>Inventory Management System</h3>
        </div> 
 </div> */}
-     <div className="hdash">
+     <div className="hdash1">
    
-   <div className="homeicon">
+   <div className="homicon">
   <img src="images/dd.png"  alt="logo" className="hicon"/> 
   </div>
-  <div className="dashboard">
-  <h2 className="dash" ><span className="top">
-   Xiron pharmacy </span></h2>
-  <h3 className="home">Inventory Management System</h3>
+  <div className="dashboard1">
+  <h2 className="dash" >
+  <b>Xiron pharmacy</b> 
+</h2>
+  <h3 className="home">Inventory Management System</h3> 
 
   </div>
-  </div>
+  </div> 
        <div className="hdash">
    
-       <div className="homeicon">
+       <div className="homcon">
       <img src="images/homeicon.png" alt="logo" className="hicon"/> 
       </div>
-      <div className="dashboard">
+      <div className="dashboard2">
       <h2 className="dash">Dashboard</h2>
       <h3 className="home">Home</h3>
   
@@ -46,7 +47,7 @@ return (
 <img src="images/noticon.png" alt="logo" className="noteicon"/>
 </div> 
 <div className="logout">
-<LogoutButton />
+<LogoutButton  />
 </div>
 </div>
 </div>

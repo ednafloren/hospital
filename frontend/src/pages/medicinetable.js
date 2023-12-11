@@ -2,23 +2,18 @@
 import React, { useState ,useEffect} from 'react';
 import '../styles/medicine.css';
 import '../styles/medicinetable.css';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import DeleteIcon  from '@mui/icons-material/Delete';
+import EditIcon  from '@mui/icons-material/Edit';
 
-// const MedicineTable = () => {
-//   const [medicine, setMedicine] = useState({
-//     name: '',
-//     category: '',
-//     quantity: '',
-//     unitprice:'',
-//     totalprice:'',
-//     medexpiry:'',
-//     // Add more fields as needed
-//   });
+
 
 const MedicineTable = () => {
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(null);
-
+  const [items, setItems] = useState([]);
+  const navigate=useNavigate();
+  // Initialize with your data
   useEffect(() => {
     fetch('http://127.0.0.1:5000/medicines/')
       .then(response => {
@@ -46,6 +41,45 @@ const MedicineTable = () => {
   if (error) {
     return <p>{error}</p>;
   }
+  const handleUpdateClick = async (itemId) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/medicines/get/${itemId}`);
+
+      if (response.ok) {
+        const data = await response.json();
+        navigate(`/edit/${itemId}`);
+        // Handle the fetched data, you can navigate to an edit page, show a modal, etc.
+        console.log('Fetched item details:', data);
+      } else {
+        console.error('Error fetching item details:', response.status);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
+
+  const handleDelete = async (itemId) => {
+    try {
+      // Make API request to delete item on the server
+      const response=await fetch(`http://127.0.0.1:5000/medicines/delete/${itemId}`, {
+        method: 'DELETE',
+        // Add headers if needed
+      });
+      if (response.ok) {
+             // Update local state
+      const updatedItems = items.filter(item => item.id !== itemId);
+      setItems(updatedItems);
+        console.log('delete');
+      }
+  
+ 
+    }catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  };
+  
+  
 
   return (
     <>
@@ -65,7 +99,10 @@ const MedicineTable = () => {
 
             <th>Created By</th>
             <th>Created At</th>
-            <th>Updated By</th>
+            <th>Updated At</th>
+            <th>Expiry Date</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -79,7 +116,7 @@ const MedicineTable = () => {
               <img
   src={item.image}
   alt={`Image for ${item.name}`}
-  style={{ maxWidth: '100px', maxHeight: '100px' }}
+  style={{ maxWidth: '50px', maxHeight: '100px' }}
 />
 
                 </td>
@@ -89,13 +126,21 @@ const MedicineTable = () => {
               <td>{item.created_by}</td>
               <td>{item.created_at}</td>
               <td>{item.updated_at}</td>
+              
+            <td>{item.expiry_date}</td>
+           
+                <td>
+              <EditIcon className='EditIcon'onClick={() => handleUpdateClick(item.id)}/>
+         
+              </td>
+
+              <td><DeleteIcon className='delete' onClick={() => handleDelete(item.id)}/></td>
 
             </tr>
           )
           )}
         </tbody>
       </table>
-   
    
     </div>
       <div className='submitdiv'>

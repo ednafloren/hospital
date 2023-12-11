@@ -24,7 +24,8 @@ class MedicalSupply(db.Model):
   created_by  = db.Column(db.Integer,db.ForeignKey('users.id'))
   created_at = db.Column(db.String(255),nullable=True)
   updated_at = db.Column(db.String(255),nullable=True)
-  
+  dispensed_stocks= db.relationship("DispensedStock", backref = "medical_supplies",cascade='all,delete-orphan')
+
 
 
   def __init__(self, name,image,unit_price,stock,medical_supply_category_id,created_by,created_at,updated_at):

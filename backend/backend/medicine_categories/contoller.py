@@ -5,10 +5,13 @@ from backend.db import db
 from datetime import datetime
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required 
-
+from flask_cors import CORS
 
 # Creating a blue print for orders, where orders is the resource
 medicine_categories = Blueprint('medicine_categories',__name__,url_prefix='/medicine_categories')
+
+CORS(medicine_categories, supports_credentials=True)
+
 
 #Getting all orders
 @medicine_categories.route("/")
@@ -80,14 +83,15 @@ def update_medicine_category(id):
 # delete
 @medicine_categories.route('/delete/<id>', methods=['DELETE'])
 def delete_medicine_category(id):
-    delete_id = MedicineCategory.query.get(id)
+    medcat = MedicineCategory.query.get(id)
 
-    if delete_id is None:
-        return{"Message":" This Medicine Category doesnot exist"}
-    # user doesnot exist
-    db.session.delete(delete_id)
-    db.session.commit()
-    return jsonify({"message":"Medicine Category deleted successfully."})
+    if medcat:
+        for medicines in medcat.medicines:
+            db.session.delete(medicines)
+        db.session.delete(medcat)
+        db.session.commit()    
+        return jsonify({"message":"medcat deleted successfully."})
+    return jsonify({"error":" This medcat doesnot exist"}),404
         
    
   

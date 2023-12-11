@@ -21,50 +21,7 @@ const RegisterForm = () => {
   const [serverErrors, setServerErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
-    // Perform form validation
-    const errors = validateForm(register);
-    setFormErrors(errors);
-  
-    if (Object.keys(errors).length === 0) {
-      console.log('Request Payload:', JSON.stringify(register));
-  
-      try {
-        const response = await fetch('http://127.0.0.1:5000/users/register', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(register),
-        });
-  
-        if (response.ok) {
-          console.log('User registered successfully');
-         
-          navigate('/home');
-        } else {
-          const data = await response.json();
-  
-          if (data.error === 'Email is already in use') {
-            // Set a specific state for this server-side error
-            setServerErrors({ uniqueEmail: data.error });
-          } else {
-            // Set server-side errors state for other cases
-            setServerErrors(data);
-          }
-  
-          // Log the entire response for further investigation
-          console.log('Full Response:', response);
-        }
-      } catch (error) {
-        console.error('Error registering user:', error.message);
-      }
-    } else {
-      console.log('Form has validation errors. Cannot submit.');
-    }
-  };
+ 
   
   const handleChange = async (e) => {
   const { name, value } = e.target;
@@ -166,6 +123,9 @@ const RegisterForm = () => {
     if (!data.name.trim()) {
       errors.name = 'Username is required';
     }
+   else if (!/^[a-zA-Z]+[0-9]+$|^[a-zA-Z]+$/.test(data.name)) {
+    errors.name = 'Name must start with a letter';
+  }
 
     // Validate email
     if (!data.email.trim()) {
@@ -177,18 +137,18 @@ const RegisterForm = () => {
   if (!data.contact.trim()) {
     errors.contact = 'Contact is required';
   }
-  else if (!/^0\d{9}$/.test(data.contact)) {
-    // If not in the Uganda phone number format
-    errors.contact = 'Invalid Uganda phone number format'; }
-  else if (!/^\+256\s?\d{9}$/.test(data.contact)) {
-  // If not in the Uganda phone number format
-  errors.contact = 'Invalid Uganda phone number format'; }
-  else if (!/^(\+|d{0})\d+$/.test(data.contact)) {
+
   
-  errors.contact = 'Contact must start with "0" or "+" and be followed by digits'}
-  else if (!/^\+?\d{1,4}?\s?\d{6,15}$/.test(data.contact)) {
-    errors.contact = 'Invalid phone number format';
-  }
+  else  if (!/^[+0]/.test(data.contact)) {
+      errors.contact = 'Contact must start with 0 ';  
+   }
+    else if (!/^0\d{9}$/.test(data.contact)){
+     errors.contact = 'Contact must have 10 digits';
+   }
+
+
+   
+
     // Validate password
     if (!data.password.trim()) {
       errors.password = 'Password is required';
@@ -210,6 +170,88 @@ const RegisterForm = () => {
     console.log('Form validation errors:', errors);
     return errors;
   };
+  const storeToken = (token) => {
+    localStorage.setItem('access_token', token);
+    console.log('jwt token:',token)
+
+  };
+
+// subm
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  // Perform form validation
+  const errors = validateForm(register);
+  setFormErrors(errors);
+
+  if (Object.keys(errors).length === 0) {
+    console.log('Request Payload:', JSON.stringify(register));
+
+    try {
+      const response = await fetch('http://127.0.0.1:5000/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(register),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        console.log('User registered successfully');
+       
+  
+          // Store the token in local storage
+          storeToken(data.access_token);
+  
+          // Fetch the user details after successful login
+          const userResponse = await fetch('http://127.0.0.1:5000/users/get_user_details', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${data.access_token}`,
+            },
+          });
+  
+          const userData = await userResponse.json();
+  
+          if (userResponse.ok) {
+            console.log('User details fetched successfully', userData.user_details);
+         
+  
+            // Store the user data in local storage
+            localStorage.setItem('user', JSON.stringify(userData.user_details));
+  
+            // Set the user details in the state or wherever you need
+            // For example, you can use React context or set it in the component state
+            // setLoggedInUser(userData.user_details);
+  
+            navigate('/home');
+          } else {
+            console.error('Error fetching user details:', userData.message);
+          }
+
+        navigate('/home');
+      } else {
+
+        if (data.error === 'Email is already in use') {
+          // Set a specific state for this server-side error
+          setServerErrors({ uniqueEmail: data.error });
+        } else {
+          // Set server-side errors state for other cases
+          setServerErrors(data);
+        }
+
+        // Log the entire response for further investigation
+        console.log('Full Response:', response);
+      }
+    } catch (error) {
+      console.error('Error registering user:', error.message);
+    }
+  } else {
+    console.log('Form has validation errors. Cannot submit.');
+  }
+};
 
   return (
     <div className="login-form">
@@ -257,7 +299,7 @@ const RegisterForm = () => {
           <div className="form-group">
             <label>Contact:
               <input
-                type="number"
+                type="text"
                 name="contact"
                 id="contact"
                 placeholder="Enter Contact"

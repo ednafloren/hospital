@@ -1,5 +1,6 @@
 from backend.db import db
 from dataclasses import dataclass
+from sqlalchemy.orm import relationship
 
 @dataclass
 class Medicine(db.Model):
@@ -25,6 +26,9 @@ class Medicine(db.Model):
   updated_at = db.Column(db.String(255),nullable=True)
   medicine_category_id= db.Column(db.Integer, db.ForeignKey('medicine_categories.id'))
   expiry_date = db.Column(db.String(255), nullable=True)  # New column for expiry date
+
+#   rtnship
+  dispensed_stocks=relationship('DispensedStock',backref='medicine',cascade='all,delete-orphan')
   
 
 

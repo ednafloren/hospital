@@ -50,8 +50,17 @@ body {
  
 main {
   padding: 10px;
-  margin: 10px;
-  /* background-color: brown; */
+margin-top: 30px;
+
   width:100%;
 
+}
+@media (min-width:481px) and (max-width:768px){
+  main {
+  padding-left: 0px;
+  margin-left: 0px;
+margin-top: 30px;
+  background-color: brown;
+  width:100%;
+}
 }

@@ -2,12 +2,15 @@
 import React, { useState,useEffect} from 'react';
 import '../styles/medicine.css';
 import '../styles/medicinetable.css';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import DeleteIcon  from '@mui/icons-material/Delete';
+import EditIcon  from '@mui/icons-material/Edit';
 
 const MedicalSuppliesTable = () => {
   const [supply, setSupply] = useState([]);
   const [error, setError] = useState(null);
-
+  const [items, setItems] = useState([]); // Initialize with your data
+  const navigate=useNavigate();
   useEffect(() => {
     fetch('http://127.0.0.1:5000/medical_supplies/')
       .then(response => {
@@ -35,7 +38,48 @@ const MedicalSuppliesTable = () => {
   if (error) {
     return <p>{error}</p>;
   }
+  const handleDelete = async (itemId) => {
+    try {
+      // Make API request to delete item on the server
+      const response=await fetch(`http://127.0.0.1:5000/medical_supplies/delete/${itemId}`, {
+        method: 'DELETE',
+        // Add headers if needed
+      });
+      if (response.ok) {
+             // Update local state
+      const updatedItems = items.filter(item => item.id !== itemId);
+      setItems(updatedItems);
+        console.log('delete');
+      }
+  
+ 
+    }catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  };
 
+  // HANDLE CLICK
+  const handleUpdateClick = async (itemId) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/medical_supplies/get/${itemId}`);
+
+      if (response.ok) {
+        const data = await response.json();
+        navigate(`/editsupply/${itemId}`);
+        // Handle the fetched data, you can navigate to an edit page, show a modal, etc.
+        console.log('Fetched item details:', data);
+      } else {
+        console.error('Error fetching item details:', response.status);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
+
+
+
+
+  
   return (
 <>
 <div className='space'>
@@ -55,6 +99,8 @@ const MedicalSuppliesTable = () => {
             <th>Created By</th>
             <th>Created At</th>
             <th>Updated By</th>
+          <th></th>
+          <th></th>
           </tr>
         </thead>
 <tbody>
@@ -68,7 +114,7 @@ const MedicalSuppliesTable = () => {
               <img
   src={item.image}
   alt={`Image for ${item.name}`}
-  style={{ maxWidth: '100px', maxHeight: '100px' }}
+  style={{ maxWidth: '60px', maxHeight: '60px' }}
 />
 
                 </td>
@@ -78,6 +124,10 @@ const MedicalSuppliesTable = () => {
               <td>{item.created_by}</td>
               <td>{item.created_at}</td>
               <td>{item.updated_at}</td>
+              <td>
+              <EditIcon className='EditIcon'onClick={() => handleUpdateClick(item.id)}/>
+            </td>
+              <td><DeleteIcon className='delete' onClick={() => handleDelete(item.id)}/></td>
 
             </tr>
           )

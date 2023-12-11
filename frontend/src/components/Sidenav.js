@@ -45,8 +45,8 @@ export default function Sidenav() {
         </div>
         <div className={styles.userp}>
       
-        <Icon sx={{ fontSize: 80}}>
-  <AccountCircleIcon style={{ fontSize: 80 }}  />
+        <Icon sx={{ fontSize: 80}}className={styles}>
+  <AccountCircleIcon className={styles.AccountCircleIcon} style={{ fontSize: 80 }}  />
 </Icon>
 
      {user ? (

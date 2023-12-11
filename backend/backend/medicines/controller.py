@@ -6,7 +6,7 @@ from backend.db import db
 from datetime import datetime
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required 
-
+from flask_cors import CORS
 
 # # Creating a blue print for medicines, where medicine is the resource
 # medicines = Blueprint('medicines',__name__,url_prefix='/medicines')
@@ -133,7 +133,7 @@ from flask_jwt_extended import jwt_required
 #     return jsonify({"message":"This Medicine was updated successfully"})
 # Creating a blue print for medicines, where medicine is the resource
 medicines = Blueprint('medicines', __name__, url_prefix='/medicines')
-
+CORS(medicines, supports_credentials=True)
 # Getting all medicines
 @medicines.route("/")
 def get_all_medicines():
@@ -225,13 +225,14 @@ def create_new_medicine():
     return jsonify({'message': 'New Medical supply item created successfully', 'data': [medicines.id, medicines.name, medicines.created_by, medicines.created_at, medicines.expiry_date, medicines.updated_at, medicines.unit_price, medicines.image, medicines.stock, medicines.medicine_category_id]}), 201
 
 # Other routes...
-@medicines.route('/get/<id>', methods=['GET'])
+@medicines.route('/get/<int:id>', methods=['GET'])
 def get_medicines(id):
     medicine_id= Medicine.query.get(id)
+
     results = {
         "id":medicine_id.id,
         "name": medicine_id.name,
-        "unit_price":medicine_id.price_unit,
+        "unit_price":medicine_id.unit_price,
         "image":medicine_id.image,
         "stock":medicine_id.stock,
         "expiry_date":medicine_id.expiry_date,
@@ -240,6 +241,7 @@ def get_medicines(id):
         "created_at":medicine_id.created_at
         
     }
+        
     
     return jsonify({"Success": True, "Medicine": results,"Message":"Medicine item details retrieved"})
 
@@ -249,10 +251,10 @@ def update_medicalsupply(id):
 
     medicine.name = request.json['name']
     medicine.unit_price = request.json['unit_price']
-    medicine.image = request.json['image']
+    # medicine.image = request.json['image']
     medicine.stock = request.json['stock']
-    medicine.expiry_date = request.json['expiry_date']
-    medicine.medicine_category_id = request.json['medicine_category_id']
+    # medicine.expiry_date = request.json['expiry_date']
+    # medicine.medicine_category_id = request.json['medicine_category_id']
     medicine.updated_at = datetime.utcnow()
 
     db.session.add(medicine)
@@ -264,14 +266,22 @@ def update_medicalsupply(id):
 # # delete
 @medicines.route('/delete/<id>', methods=['DELETE'])
 def delete_medicine(id):
-    delete_id = Medicine.query.get(id)
+    medicine = Medicine.query.get(id)
+    if medicine:
+        for dispensed_stocks in medicine.dispensed_stocks:
+            db.session.delete(dispensed_stocks)
+        db.session.delete(medicine)
+        db.session.commit()    
+        return jsonify({"message":"Medicine deleted successfully."})
+    return jsonify({"error":" This Medicine doesnot exist"}),404
 
-    if delete_id is None:
-        return{"Message":" This Medicine doesnot exist"}
-    # user doesnot exist
-    db.session.delete(delete_id)
-    db.session.commit()
-    return jsonify({"message":"Medicine deleted successfully."})
+
+    # if delete_id is None:
+    #     return{"Message":" This Medicine doesnot exist"}
+    # # user doesnot exist
+    # db.session.delete(delete_id)
+    # db.session.commit()
+    # return jsonify({"message":"Medicine deleted successfully."})
         
    
   

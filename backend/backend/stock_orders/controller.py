@@ -101,14 +101,15 @@ def update_stock_order(id):
 # delete
 @stock_orders.route('/delete/<id>', methods=['DELETE'])
 def delete_stock_order(id):
-    delete_id = StockOrder.query.get(id)
+    stockorder = StockOrder.query.get(id)
 
-    if delete_id is None:
-        return{"Message":"This Stock Order doesnot exist"}
-    # Order doesnot exist
-    db.session.delete(delete_id)
-    db.session.commit()
-    return jsonify({"message":"This Stock Order deleted successfully."})
+    if stockorder:
+        for received_purchases in stockorder.received_purchases:
+            db.session.delete(received_purchases)
+        db.session.delete(stockorder)
+        db.session.commit()    
+        return jsonify({"message":"stockot deleted successfully."})
+    return jsonify({"error":" This stockorder doesnot exist"}),404
         
    
   

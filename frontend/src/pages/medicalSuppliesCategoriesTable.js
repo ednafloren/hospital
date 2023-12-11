@@ -3,10 +3,12 @@ import React, { useState,useEffect } from 'react';
 import '../styles/medicine.css';
 import '../styles/medicinetable.css';
 import { Link } from 'react-router-dom';
+import DeleteIcon  from '@mui/icons-material/Delete';
 
 const MedicalSuppliesCategoriesTable = () => {
   const [supplycat, setSupplycat] = useState([]);
   const [error, setError] = useState(null);
+  const [items, setItems] = useState([]); // Initialize with your data
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000//medical_supply_categories/')
@@ -36,13 +38,31 @@ const MedicalSuppliesCategoriesTable = () => {
   if (error) {
     return <p>{error}</p>;
   }
-
+  const handleDelete = async (itemId) => {
+    try {
+      // Make API request to delete item on the server
+      const response=await fetch(`http://127.0.0.1:5000/medical_supply_categories/delete/${itemId}`, {
+        method: 'DELETE',
+        // Add headers if needed
+      });
+      if (response.ok) {
+             // Update local state
+      const updatedItems = items.filter(item => item.id !== itemId);
+      setItems(updatedItems);
+        console.log('delete');
+      }
+  
+ 
+    }catch (error) {
+      console.error('Error deleting item:', error);
+    }
+  };
   return (
 <>
 <div className='space'>
       <div className='medtitle'>
       <h2>Medical Supplies Categories</h2></div>
-      <div>
+      <table>
       <tr>
   <th>ID</th>
 <th>Name</th>
@@ -53,7 +73,7 @@ const MedicalSuppliesCategoriesTable = () => {
 <th>Created_at</th>
 
 <th>Updated_by</th>
-
+<th></th>
 
 
 </tr>
@@ -70,13 +90,14 @@ const MedicalSuppliesCategoriesTable = () => {
               <td>{item.created_by}</td>
               <td>{item.created_at}</td>
               <td>{item.updated_at}</td>
+              <td><DeleteIcon className='delete' onClick={() => handleDelete(item.id)}/></td>
 
             </tr>
           )
           )}
         </tbody>
 
-      </div>
+      </table>
 
    
    

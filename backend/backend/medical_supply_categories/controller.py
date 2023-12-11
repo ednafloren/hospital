@@ -77,11 +77,12 @@ def update_medicalsupplycategory(id):
 # delete
 @medical_supply_categories.route('/delete/<id>', methods=['DELETE'])
 def delete_medicalsupplycategory(id):
-    delete_id = MedicalSupplyCategory.query.get(id)
+    medsupplycat = MedicalSupplyCategory.query.get(id)
 
-    if delete_id is None:
-        return{"Message":"This medical supply category doesnot exist"}
-    # medical supply category doesnot exist
-    db.session.delete(delete_id)
-    db.session.commit()
-    return jsonify({"message":"Medicl supply category deleted successfully."})
+    if medsupplycat:
+        for medical_supplies in medsupplycat.medical_supplies:
+            db.session.delete(medical_supplies)
+        db.session.delete(medsupplycat)
+        db.session.commit()    
+        return jsonify({"message":"medsupplycat deleted successfully."})
+    return jsonify({"error":" This medsupplycat doesnot exist"}),404

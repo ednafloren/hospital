@@ -102,14 +102,16 @@ def update_medicalsupply(id):
 # delete
 @medical_supplies.route('/delete/<id>', methods=['DELETE'])
 def delete_medicalsupply(id):
-    delete_id = MedicalSupply.query.get(id)
+    medsupply = MedicalSupply.query.get(id)
 
-    if delete_id is None:
-        return{"Message":" This Medical supply item doesnot exist"}
-    # user doesnot exist
-    db.session.delete(delete_id)
-    db.session.commit()
-    return jsonify({"message":"Medical supply item deleted successfully."})
+    if medsupply:
+        for stock_orders in medsupply.dispensed_stocks:
+            db.session.delete(stock_orders)
+        db.session.delete(medsupply)
+        db.session.commit()    
+        return jsonify({"message":"medsupply deleted successfully."})
+    return jsonify({"error":" This medsupply doesnot exist"}),404
+
         
    
   

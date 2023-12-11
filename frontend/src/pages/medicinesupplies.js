@@ -19,13 +19,32 @@ const MedicalSupplies = () => {
       [name]: value,
     });
   };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., sending data to the server or storing it in state.
-  };
+    console.log('Login Request Payload:', JSON.stringify(medicalSupplies));
 
-  return (
+  try {
+    const response = fetch('http://127.0.0.1:5000/medical_supplies/create/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      
+      },
+      body: JSON.stringify(medicalSupplies),
+    });
+
+    if (response.ok) {
+      console.log('Medicine submitted successfully');
+      // You can add additional logic here if needed
+    } else {
+      console.error('Error submitting medicine:', response.statusText);
+    }
+  } catch (error) {
+    console.error('Error submitting medicine:', error.message);
+  }
+};
+
+return (
     <div className="medicine-form">
       <div className='medtitle'>
       <h2>Medical Supplies</h2></div>

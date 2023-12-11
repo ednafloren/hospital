@@ -4,11 +4,11 @@ import '../styles/medicine.css';
 const MedicineForm = () => {
   const [medicine, setMedicine] = useState({
     name: '',
-    category: '',
-    quantity: '',
+    category: null,
+    stock: '',
     unitprice: '',
     totalprice: '',
-    medexpiry: '',
+    expirydate: '',
     // Add more fields as needed
   });
 
@@ -98,12 +98,12 @@ const MedicineForm = () => {
           <input
           type='date'
             name="expirydate"
-            value={medicine.expirydate}
+            value={medicine.expiry_date}
             onChange={handleChange}
             required
           />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Image:</label>
           <input
           type='file'
@@ -113,7 +113,7 @@ const MedicineForm = () => {
             required
           />
         </div>
-      
+       */}
         <div className='submitdiv'>
           <button type="submit">Submit</button>
         </div>

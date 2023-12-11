@@ -27,7 +27,8 @@ class StockOrder(db.Model):
   created_by  = db.Column(db.Integer,db.ForeignKey('users.id'))
   created_at = db.Column(db.String(255),nullable=True)
   updated_at = db.Column(db.String(255),nullable=True)
-  
+  received_purchases= db.relationship("ReceivedPurchase", backref = "stock_orders",cascade='all,delete-orphan')
+
 
 
   def __init__(self,status,medical_supply_id,medical_supply_quantity,medicine_id, medicine_quantity,created_by,created_at,updated_at):

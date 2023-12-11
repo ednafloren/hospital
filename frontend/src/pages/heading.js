@@ -10,7 +10,7 @@ return (
        <img src="images/bluegrey.png" alt="logo" className="logo"/> 
        </div>
        <div className="head2">
-       <h2 className="top">Xiron pharmacy  </h2>
+       <h2 className="top"><i>Xiron pharmacy</i>  </h2>
        <h3>Inventory Management System</h3>
        </div> 
 {/* </div> */}
