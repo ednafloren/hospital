@@ -8,7 +8,7 @@ const MedicalSupplies = () => {
     category: '',
     quantity: '',
     unitprice:'',
-    totalprice:'',
+    
     // Add more fields as needed
   });
 
@@ -89,7 +89,7 @@ return (
             required
           />
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label>Total Price:</label>
           <input
           type='number'
@@ -98,7 +98,7 @@ return (
             onChange={handleChange}
             required
           />
-        </div>
+        </div> */}
    
       
         {/* Add more form fields for medicine details */}

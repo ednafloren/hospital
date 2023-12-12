@@ -46,7 +46,7 @@ def create_new_medicine():
 
     # Validations...
     
-    def is_near_expiry(expiry_date, days_before=7):
+    def is_near_expiry(expiry_date, days_before=2):
         """
         Check if the medicine is nearing expiry.
 
@@ -152,7 +152,7 @@ def delete_medicine(id):
         return jsonify({"message":"Medicine deleted successfully."})
     return jsonify({"error":" This Medicine doesnot exist"}),404
 
-<<<<<<< HEAD
+
 
     # if delete_id is None:
     #     return{"Message":" This Medicine doesnot exist"}
@@ -160,7 +160,7 @@ def delete_medicine(id):
     # db.session.delete(delete_id)
     # db.session.commit()
     # return jsonify({"message":"Medicine deleted successfully."})
-=======
+
     if delete_id is None:
         return{"Message":" This Medicine doesnot exist"}
     # user doesnot exist
@@ -168,10 +168,9 @@ def delete_medicine(id):
     db.session.commit()
     return jsonify({"message":"Medicine deleted successfully."})
 
-@medicines.route('/near-expiry', methods=['GET'])
 def get_near_expiry_medicines():
-    # Get medicines nearing expiry (e.g., within the next 7 days)
-    days_before_expiry = 7
+    # Get medicines nearing expiry (e.g., within the next 2 days)
+    days_before_expiry = 2  # Change this to 2
     current_date = datetime.now()
     expiry_threshold = current_date + timedelta(days=days_before_expiry)
 
@@ -192,7 +191,6 @@ def get_near_expiry_medicines():
         "total": len(near_expiry_medicines),
         "message": "Medicines nearing expiry retrieved successfully",
     }), 200
-
 @medicines.route('/expired', methods=['GET'])
 def get_expired_medicines():
     # Get fully expired medicines
@@ -237,6 +235,6 @@ def get_low_stock_medicines():
         "total": len(low_stock_medicines),
         "message": "Medicines with low stock retrieved successfully",
     }), 200
->>>>>>> dc74770e830ad77b1ce442efa485892017719013
+
         
    

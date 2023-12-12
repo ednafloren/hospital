@@ -28,6 +28,7 @@ import StockOrdersForm from './pages/stockOrderForm';
 import DispensedstockTable from './pages/dispensedstocktable';
 import EditForm from './pages/editform';
 import MedicalSupplyEdit from './pages/medicalsupllyedit';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
  
 root.render(
@@ -88,7 +89,7 @@ root.render(
        <Route path='/dispensedstocktable'element={[ <div className="App">
        <Sidenav/>,<Navbar/>,<main><DispensedstockTable/></main></div>]}/>
 
-
+      
 
  <Route path='/Report'element={[ <div className="App">
        <Sidenav/><main><Report/></main></div>]}/>

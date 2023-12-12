@@ -8,11 +8,11 @@ const MedicineForm = () => {
     stock: '',
     unitprice: '',
     totalprice: '',
-<<<<<<< HEAD
+
     expirydate: '',
-=======
+
     expiry_date: '',
->>>>>>> dc74770e830ad77b1ce442efa485892017719013
+
     // Add more fields as needed
   });
 
