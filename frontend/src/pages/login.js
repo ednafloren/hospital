@@ -69,7 +69,6 @@ const LoginForm = () => {
         if (response.ok) {
           console.log('Login successful');
 
-<<<<<<< HEAD
   
           // Store the token in local storage
           storeToken(data.access_token);
@@ -106,11 +105,6 @@ const LoginForm = () => {
 
          
 
-=======
-          
-          // Redirect or perform other actions after successful login
-
->>>>>>> dc74770e830ad77b1ce442efa485892017719013
           navigate('/home');
 
         } else {

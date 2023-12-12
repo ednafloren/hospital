@@ -414,13 +414,13 @@ h3{
                        }
                        .not{
                  position: relative;
-                 right: 80%;
+                 right: 100%;
                        }
                  
                        .logout{
                         
                          position: absolute;
-                         right: 10%;
+                         right: 50%;
                          bottom: 5%;
                        }
           
@@ -428,95 +428,49 @@ h3{
             }
         
         
- 
-            /* [12:44, 12/10/2023] Floren: import React, { useState, useEffect } from 'react';
+            @media (min-width:1224px) and (max-width:1390px) {
+              .navbar {
+                width: 100%;
+              }
+              .hdash{
+                position: relative;
+                width: 200px;
+                left: 0%;
+                right: 100%;
+              }
+              .homcon{
+                position: absolute;
+                left: 0%;
 
-            const MedicalItemDetail = ({ itemId }) => {
-              const [medicalItem, setMedicalItem] = useState(null);
-              const [error, setError] = useState(null);
-            
-              useEffect(() => {
-                const fetchMedicalItem = async () => {
-                  try {
-                    const response = await fetch(/api/medical-item/${itemId});
-                    if (response.ok) {
-                      const data = await response.json();
-                      setMedicalItem(data);
-                    } else {
-                      setError('Medical item not found');
-                    }
-                  } catch (error) {
-                    setError('Error fetching medical item');
-                  }
-                };
-            
-                fetchMedicalItem();
-              }, [itemId]);
-            
-              if (error) {
-                return <div>{error}</div>;
               }
-            
-              if (!medicalItem) {
-                return <div>Loading...</div>;
+              .dashboard2{
+                position: absolute;
+                left: 20%;
               }
-            
-              return (
-                <div>
-                  <h1>{medicalItem.name}</h1>
-                  <p>Description: {medicalItem.description}</p>
-                  <p>Price: {medicalItem.price}</p>
-                </div>
-              );
-            };
-            
-            export default MedicalItemDetail;
-            [12:44, 12/10/2023] Floren: from flask import Flask, jsonify
-            from flask_sqlalchemy import SQLAlchemy
-            
-            app = Flask(_name_)
-            app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///medical_items.db'  # Use your actual database connection string
-            db = SQLAlchemy(app)
-            
-            # Define the MedicalItem model
-            class MedicalItem(db.Model):
-                id = db.Column(db.Integer, primary_key=True)
-                name = db.Column(db.String(50))
-                description = db.Column(db.String(200))
-                price = db.Column(db.Float)
-            
-            # API endpoint to get a single medical item by ID
-            @app.route('/api/medical-item/<int:item_id>', methods=['GET'])
-            def get_medical_item(item_id):
-                medical_item = MedicalItem.query.get(item_id)
-            
-                if medical_item:
-                    return jsonify({
-                        "id": medical_item.id,
-                        "name": medical_item.name,
-                        "description": medical_item.description,
-                        "price": medical_item.price
-                    })
-                else:
-                    return jsonify({"error": "Medical item not found"}), 404
-            
-            # API endpoint to get all medical items individually
-            @app.route('/api/medical-items', methods=['GET'])
-            def get_all_medical_items():
-                medical_items = MedicalItem.query.all()
-            
-                if medical_items:
-                    items_list = [{
-                        "id": item.id,
-                        "name": item.name,
-                        "description": item.description,
-                        "price": item.price
-                    } for item in medical_items]
-            
-                    return jsonify(items_list)
-                else:
-                    return jsonify({"error": "No medical items found"}), 404
-            
-            if _name_ == '_main_':
-                db.create_all()  # Create tables before running the app
-                app.run(debug=True) */
+         
+              .notlogout{
+                position: relative;
+                     width: 20%;
+                right: 0%;
+         
+             
+                   
+                   
+                     margin-top: 5px;
+                   }
+                   .not{
+             position: relative;
+             right: 80%;
+                   }
+             
+                   .logout{
+                    
+                     position: absolute;
+                     right: 0%;
+                     bottom: 5%;
+                   }
+      
+    
+        }
+    
+    

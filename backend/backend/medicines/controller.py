@@ -152,7 +152,7 @@ def delete_medicine(id):
         return jsonify({"message":"Medicine deleted successfully."})
     return jsonify({"error":" This Medicine doesnot exist"}),404
 
-<<<<<<< HEAD
+
 
     # if delete_id is None:
     #     return{"Message":" This Medicine doesnot exist"}
@@ -160,7 +160,7 @@ def delete_medicine(id):
     # db.session.delete(delete_id)
     # db.session.commit()
     # return jsonify({"message":"Medicine deleted successfully."})
-=======
+
     if delete_id is None:
         return{"Message":" This Medicine doesnot exist"}
     # user doesnot exist
@@ -237,6 +237,6 @@ def get_low_stock_medicines():
         "total": len(low_stock_medicines),
         "message": "Medicines with low stock retrieved successfully",
     }), 200
->>>>>>> dc74770e830ad77b1ce442efa485892017719013
+
         
    

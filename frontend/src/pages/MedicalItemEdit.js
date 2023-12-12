@@ -85,7 +85,7 @@ const MedicalItemEdit = () => {
     <div className='editpage'>
       <h2>Edit Medical Item</h2>
       <p>ID: {itemDetails.id}</p>
-  
+  <form className='myform'>
       <label>
         Name:
         <input type="text" name="name" value={updatedItem.name} onChange={handleChange} />
@@ -99,6 +99,7 @@ const MedicalItemEdit = () => {
         unit_price:
         <input type="number" name="unit_price" value={updatedItem.unit_price} onChange={handleChange} />
       </label>
+      </form>
       <button onClick={handleUpdate}className='update'>Save</button>
     </div>
   );

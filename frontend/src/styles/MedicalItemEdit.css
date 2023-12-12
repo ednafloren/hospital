@@ -1,7 +1,14 @@
 .editpage{
-    margin-top: 50px;
+    margin: 100px;
+    background: rgb(181, 50, 193);
+    padding: 10px;
+
+    
 }
 .update{
     margin-top: 20px;
     
 }
+/* form{
+    background: rgb(181, 50, 193);
+} */

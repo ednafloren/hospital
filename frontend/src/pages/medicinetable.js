@@ -99,15 +99,10 @@ const MedicineTable = () => {
 
             <th>Created By</th>
             <th>Created At</th>
-<<<<<<< HEAD
             <th>Updated At</th>
             <th>Expiry Date</th>
             <th></th>
             <th></th>
-=======
-            <th>Updated By</th>
-            <th>expiry_date</th>
->>>>>>> dc74770e830ad77b1ce442efa485892017719013
           </tr>
         </thead>
         <tbody>
@@ -131,7 +126,6 @@ const MedicineTable = () => {
               <td>{item.created_by}</td>
               <td>{item.created_at}</td>
               <td>{item.updated_at}</td>
-<<<<<<< HEAD
               
             <td>{item.expiry_date}</td>
            
@@ -142,9 +136,6 @@ const MedicineTable = () => {
 
               <td><DeleteIcon className='delete' onClick={() => handleDelete(item.id)}/></td>
 
-=======
-              <td>{item.expiry_date}</td>
->>>>>>> dc74770e830ad77b1ce442efa485892017719013
             </tr>
           )
           )}

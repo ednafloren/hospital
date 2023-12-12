@@ -1,65 +1,68 @@
-// MedicineForm.js
+
 import React, { useState } from 'react';
 import '../styles/medicine.css'
 
-const MedicineCategoriesForm = () => {
-  const [medicinecat, setMedicineCategoriesForm] = useState({
-  
-    name: '',
+import {useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 
-    // Add more fields as needed
-  });
+export default function MedicalSupplies(){
+    const navigate = useNavigate();
+    const [name, setname]=useState("");
+    
 
-const handleChange = (e) => {
-    const { name, value } = e.target;
-    setMedicineCategoriesForm({
-      ...medicinecat,
-      [name]: value,
-    });
-  };
 
-  // const storeToken = (token) => {
-  //  localStorage.setItem('access_token', token);
-  // console.log('jwt token:',token)
-// };
-    // getting the token from local storage
-    const getToken = () => {
-      return localStorage.setItem('access_token');
-      
-    };
+    
+    const token = localStorage.getItem('access_token');
+    console.log('Token:', token);
 
-    const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log('Login Request Payload:', JSON.stringify(medicinecat));
+    const Changename=(e)=>{
+             setname(e.target.value)
+            
+             console.log(name)}
 
-  try {
-    // get the jwt token
-    const token=getToken();
-    const response = await fetch('http://127.0.0.1:5000/medicine_categories/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization':  `Bearer ${token}`,
-      
-      },
-      body: JSON.stringify(medicinecat),
-    });
-    const data = await response.json();
 
-    if (response.ok) {
-      console.log('Medicine submitted successfully');
-      // / Store the user data in local storage
-    } else {
-      console.error('Error submitting medicine:', response.statusText);
-      const responseData=await response.json();
-      console.log('Fullerror response:', responseData);
+      const handleSuccess = () => {
+        alert("Successfully created!");
+        // Redirect to the medicine categories table
+        navigate('/medicineCategoryTable');
+      };
+
+    function InsertFOS(){
+    const details = {
+        method: "POST", // or 'PUT'
+        headers: {
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+            'Authorization':`Bearer ${token}`
+        },
+        body: JSON.stringify(
+            {
+                name,
+                
+            }
+        ),
+        }
+    
+        fetch('http://127.0.0.1:5000/medicine_categories/create', details)
+        .then((response) => response.json())
+        .then((data) => {
+            // alert(data.message);
+            console.log("Success:", data);
+            handleSuccess();
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
     }
-  } catch (error) {
-    console.error('Error submitting medicine:', error.message);
-    console.log('Fullerror response:', error);
-
-  }
-};
+        
+  
+      const handleSubmit=(e)=>{ 
+        e.preventDefault();
+        
+        InsertFOS();
+        
+      
+      }
 
 
 return (
@@ -72,8 +75,8 @@ return (
           <input
             type="text"
             name="name"
-            value={medicinecat.name}
-            onChange={handleChange}
+            value={name}
+            onChange={Changename}
             required
           />
         </div>
@@ -86,4 +89,3 @@ return (
     </div>
   );
 };
-export default MedicineCategoriesForm;

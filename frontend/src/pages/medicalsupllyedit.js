@@ -25,7 +25,7 @@ const MedicalSupplyEdit = () => {
     // Fetch item details based on the itemId parameter
     const fetchItemDetails = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/medical_supplies/get/${itemId}`);
+        const response = await fetch(`http://127.0.0.1:5000/medical_supplies/`);
         
         if (response.ok) {
           const data = await response.json();

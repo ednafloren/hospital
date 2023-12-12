@@ -4,7 +4,12 @@ import { useNavigate } from 'react-router';
 const LogoutButton = () => {
   const navigate=useNavigate();
   const handleLogout = async () => {
-
+   
+      // Clear local storage on logout
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('user');
+      // Additional cleanup if needed
+  
     try {
       const response = await fetch('http://127.0.0.1:5000/users/logout', {
         method: 'POST',
@@ -32,5 +37,6 @@ const LogoutButton = () => {
     <button onClick={handleLogout}>Logout</button>
   );
 };
+
 
 export default LogoutButton;
