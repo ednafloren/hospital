@@ -379,3 +379,4 @@ const handleSubmit = async (e) => {
 };
 
 export default RegisterForm;
+

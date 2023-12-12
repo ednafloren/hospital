@@ -1,54 +1,94 @@
-import React, { useState } from 'react';
-import '../styles/medicine.css';
+import {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 
-const MedicineForm = () => {
-  const [medicine, setMedicine] = useState({
-    name: '',
-    category: null,
-    stock: '',
-    unitprice: '',
-    totalprice: '',
-
-    expirydate: '',
-
-    expiry_date: '',
-
-    // Add more fields as needed
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setMedicine({
-      ...medicine,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    console.log('Login Request Payload:', JSON.stringify(medicine));
+export default function MedicineForm(){
+    const navigate = useNavigate();
+    const [name, setname]=useState("");
+    const [unit_price, setunitprice]=useState(0);
+    const[image, setimage] = useState();
+    const [stock, setstock]=useState(0);
+    const [medical_supply_category_id , setmedsuppcat]=useState(0);
     
 
-    try {
-      const response = await fetch('http://127.0.0.1:5000/medicines/create/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        
-        },
-        body: JSON.stringify(medicine),
-      });
 
-      if (response.ok) {
-        console.log('Medicine submitted successfully');
-        // You can add additional logic here if needed
-      } else {
-        console.error('Error submitting medicine:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error submitting medicine:', error.message);
+    
+    const token = localStorage.getItem('access_token');
+    console.log('Token:', token);
+
+    const Changename=(e)=>{
+             setname(e.target.value)
+            
+             console.log(name)
+
     }
-  };
+    const Changeunit_price=(e)=>{
+        setunitprice(e.target.value)
+       
+        console.log(unit_price)
+
+}
+    const Changeimage=(e)=>{
+        
+       setimage(e.target.value)
+        console.log(image )
+    }
+
+    const Changestock=(e)=>{
+      setstock(e.target.value)
+     
+      console.log(stock)}
+
+      const Changemedical_supply_category_id=(e)=>{
+        setmedsuppcat(e.target.value)
+       
+        console.log(medical_supply_category_id)
+    
+      }
+      const handleSuccess = () => {
+        alert("Successfully created!");
+        // Redirect to the medicine categories table
+        navigate('/MedicineFormTable');
+      };
+
+    function InsertFOS(){
+    const details = {
+        method: "POST", // or 'PUT'
+        headers: {
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+            'Authorization':`Bearer ${token}`
+        },
+        body: JSON.stringify(
+            {
+                name,
+                unit_price,
+                image,
+                stock,
+                medical_supply_category_id
+            }
+        ),
+        }
+    
+        fetch('http://127.0.0.1:5000/medicines/create', details)
+        .then((response) => response.json())
+        .then((data) => {
+            // alert(data.message);
+            console.log("Success:", data);
+            handleSuccess();
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    }
+        
+  
+      const handleSubmit=(e)=>{ 
+        e.preventDefault();
+        
+        InsertFOS();
+        
+      
+      }
 
   return (
     <div className="medicine-form">
@@ -126,5 +166,3 @@ const MedicineForm = () => {
     </div>
   );
 };
-
-export default MedicineForm;

@@ -70,6 +70,8 @@ const LoginForm = () => {
           console.log('Login successful');
 
 
+
+
   
           // Store the token in local storage
           storeToken(data.access_token);
@@ -107,8 +109,11 @@ const LoginForm = () => {
          
 
 
+
           
           // Redirect or perform other actions after successful login
+
+
 
 
           navigate('/home');

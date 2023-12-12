@@ -1,15 +1,18 @@
 /* MedicineForm.css */
-.medicine-form {
+ .medicine-form {
     background: #fff;
-    padding: 60px;
+    padding: 40px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 0 5px #ccc;
-    margin-left: 300px;
-    margin-top: 20px;
-    width: 500px;
-    
-  }
+    /* margin-left: 300px; */
+    margin-top: 60px;
+    margin: 100px;
+    /* width: 500px; */
+     
+  } 
+
+
   .medtitle {
     text-align: center;
     margin: 30px;
@@ -21,6 +24,7 @@
   
   label {
     font-weight: bold;
+    text-align: left;
   }
   
   input,
@@ -45,4 +49,22 @@
     text-align: right;
     margin-top: 20px;
   }
+  /* @media   (min-width:481px) and (max-width:768px){
+
+    .medicine-form {
+      position: absolute;
+     margin-left: 10%;
+      left: 10;
+      width: 300px;
+      top:40%
+      
   
+  }
+  .formsection{
+    
+    
+     
+  
+      width: 250px;
+  }
+    } */
