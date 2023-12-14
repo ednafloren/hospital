@@ -1,9 +1,14 @@
-.col1{
+ .new{
+    margin: 100px;
+    margin-top: 150px;
+ }
+ 
+ .col1{
     display: grid;
     grid-template-columns: auto auto auto;
     column-gap: 50px;
-    margin-top: 150PX;
-    margin-left: 40px;
+    margin-top: 50PX;
+    margin-left: 30px;
 }
 /* card colors */
 .card2{
@@ -28,20 +33,22 @@
 
 .card1,.card2,.card3,.card4,.card5,.card6{
     /* display: grid; */
-    padding-left: 15px;
+  
+    
     /* grid-template-columns: auto auto ; */
-   width: 300px;
-    /* background-color: rgb(65, 64, 64); */
+   width: 400px;
     color:white;
-    padding-left: 20px;
-    padding-right: 70px;
+    /* padding-left: 20px;
+    padding-right: 70px; */
+    padding: 25px;
     /* padding-right: 1px; */
-    margin-left: 0px;
+    margin-left: 40px;
     /* border-radius: 6px; */
 }
 .col1 h3{
     color: white;
     margin-top: 10px;
+    font-size: 20px;
 }
 .total{
     display: grid;
@@ -61,6 +68,8 @@
 .tmed h3{
     margin-top: 10PX;
     color: white;
+    font-size: 24px;
+    font-weight: 800;
 
 }
 /* report column */
@@ -73,10 +82,17 @@
 
 }
 .number{
+    position: relative;
+    bottom: 30px;
+    font-size: 28px;
+    font-weight:bolder;
 
-    padding-top: 0px;
-    text-align: left;
-    margin-left: 180px;
+    padding: 2px;
+    text-align: center;
+    margin-left: 200px;
+    border-radius: 20px;
+    background-color: rgb(10, 10, 10);
+    width: 30px;
 
 }
 

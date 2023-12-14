@@ -2,10 +2,14 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
     width: 100%;
-    /* position: relative; */
-    left: 0;
+    table-layout: fixed;
+    /* overflow:visible; */
 
-    border: none;
+    
+    /* position: relative; */
+    /* left: 0;
+
+    border: none; */
     /* margin:30px;
      */
 
@@ -18,9 +22,11 @@ table {
   }
   
   th, td {
+
+    
+    padding: 8px;
     text-align: left;
-    padding: 16px;
-    /* border:1px solid black */
+    word-wrap: break-word;
 
   }
   th{
@@ -41,7 +47,10 @@ table {
   
     
   body{
-     background-color:rgb(222, 228, 250);
+     /* background-color:rgb(24, 50, 144); */
+     margin: 0;
+     padding: 0;
+     overflow: auto;
   
   }
   a{
@@ -50,23 +59,34 @@ table {
     font-size: 18px;
  }
  h2{
-  text-align: justify;
+  text-align: center;
   margin-left: 0px;
+  font-size: 25px;
  }
  button{
     background-color: rgb(105, 105, 251);
     border: none;
     padding: 10px 20px;
  }
+ .add{position: relative;
+  left: 92%;
+ 
+     margin-top: 0px;
+     margin-bottom: 10px;
+     width: 100px;}
  .space{
-  margin: 100px;
-  background: rgb(181, 50, 193);
-  padding: 10px;
+  margin: 10px;
+  margin-top: 50px;
+  /* background: rgb(181, 50, 193); */
+  padding: 0px;
+    position: relative;
+    
+}
+ .medtitle{
+margin-top: 80px;
+  
 
-/* width: 100%; */
- 
- }
- 
+}
  /* @media (min-width:481px) and (max-width:768px){
   table {
 

@@ -1,41 +1,40 @@
-
+// MedicineForm.js
+// MedicineForm.js
+// MedicalItemEdit.js
 import React, { useState, useEffect } from 'react';
-
-import { Link,useNavigate } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
 import '../styles/MedicalItemEdit.css'
+
 const MedicalItemEdit = () => {
   const { itemId } = useParams();
-  const navigate=useNavigate();
-  console.log('itemId:',itemId);
+  const navigate = useNavigate();
   const [itemDetails, setItemDetails] = useState(null);
   const [updatedItem, setUpdatedItem] = useState({
-    id: '',
     name: '',
-
-   
-    stock: 0,
+    medicine_category_id: 0,
+    stock: '',
     unit_price: 0,
-
-
+    expiry_date: '',
   });
 
   useEffect(() => {
-    // Fetch item details based on the itemId parameter
     const fetchItemDetails = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:5000/medicines/get/${itemId}`);
-        
+
         if (response.ok) {
           const data = await response.json();
-          console.log('values',data)
-          setItemDetails(data);
+          console.log('Fetched item details:', data);
+          const formattedExpiryDate = data.Medicine.expiry_date.slice(0, 16);
+
+          setItemDetails(data.Medicine);
           setUpdatedItem({
-            id: data.id,
-            name: data.name,
-         
-           stock: data.stock,
-            unit_price: data.unit_price,
+            name: data.Medicine.name,
+            medicine_category_id: data.Medicine.medicine_category_id,
+            unit_price: data.Medicine.unit_price,
+            expiry_date: formattedExpiryDate,  // Set the formatted expiry_date
+            stock: data.Medicine.stock,
           });
         } else {
           console.error('Error fetching item details:', response.status);
@@ -48,10 +47,28 @@ const MedicalItemEdit = () => {
     fetchItemDetails();
   }, [itemId]);
 
+  const handleClose = () => {
+    navigate('/medicinetable');
+  };
+
+  const handleChange = (e) => {
+    setUpdatedItem({
+      ...updatedItem,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   const handleUpdate = async () => {
     try {
+      
+              // Parse and format the expiry_date as "yyyy-MM-ddThh:mm"
+             const formattedData = {
+                ...updatedItem,
+                expiry_date: new Date(updatedItem.expiry_date).toISOString().slice(0, 16),
+              };
+        
       const response = await fetch(`http://127.0.0.1:5000/medicines/update/${itemId}`, {
-        method: 'PUT', // or 'PATCH' depending on your API design
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -60,7 +77,8 @@ const MedicalItemEdit = () => {
 
       if (response.ok) {
         console.log('Item updated successfully');
-        navigate('/medicinetable');      } else {
+        navigate('/medicinetable');
+      } else {
         console.error('Error updating item:', response.status);
       }
     } catch (error) {
@@ -68,41 +86,80 @@ const MedicalItemEdit = () => {
     }
   };
 
-  const handleChange = (e) => {
-    console.log('updatie',e.target.name,e.target.value);
-
-    setUpdatedItem({
-      ...updatedItem,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   if (!itemDetails) {
     return <div>Loading...</div>;
   }
-  console.log("updateditem",updatedItem);
+
   return (
     <div className='editpage'>
+      <div className="close-icon-box" onClick={handleClose}>
+        <span className="close-icon"><CloseIcon /></span>
+      </div>
+
       <h2>Edit Medical Item</h2>
       <p>ID: {itemDetails.id}</p>
-  <form className='myform'>
-      <label>
-        Name:
-        <input type="text" name="name" value={updatedItem.name} onChange={handleChange} />
-      </label>
-
-      <label>
-        stock:
-        <input type="number" name="stock" value={updatedItem.stock} onChange={handleChange} />
-      </label>
-      <label>
-        unit_price:
-        <input type="number" name="unit_price" value={updatedItem.unit_price} onChange={handleChange} />
-      </label>
+      <form className='myform'>
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            placeholder={itemDetails.name}
+            value={updatedItem.name}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Category Id:
+          <input
+            type="number"
+            name=" medicine_category_id"
+            placeholder={itemDetails. medicine_category_id}
+            value={updatedItem. medicine_category_id}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Unit Price:
+          <input
+            type="number"
+            name=" unit_price"
+            placeholder={itemDetails. unit_price}
+            value={updatedItem. unit_price}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Unit Price:
+          <input
+            type="datetime-local"
+            name="  expiry_date"
+            placeholder={itemDetails.expiry_date}
+            value={updatedItem.expiry_date}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Stock:
+          <input
+            type="text"
+            name="stock"
+            placeholder={itemDetails.stock}
+            value={updatedItem.stock}
+            onChange={handleChange}
+          />
+        </label>
+        {/* Add other form fields using itemDetails */}
       </form>
-      <button onClick={handleUpdate}className='update'>Save</button>
+      <button onClick={handleUpdate} className='update'>Save</button>
     </div>
   );
 };
 
 export default MedicalItemEdit;
+
+
+
+
+
+

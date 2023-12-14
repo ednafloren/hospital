@@ -1,64 +1,162 @@
 // MedicineForm.js
-import React, { useState } from 'react';
 import '../styles/medicine.css'
+import {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 
-const ReceivedPurchasesForm = () => {
-  const [ReceivedPurchases, setReceivedPurchases] = useState({
-    status: '',
-   
-    quantity: '',
+export default function ReceivedPurchasesForm(){
+    const navigate = useNavigate();
+    const [status, setstatus]=useState("");
+    const [medical_supply_quantity, setmedical_supply_quantity]=useState();
+    const[medicine_quantity, setmedicine_quantity] = useState();
+    const [stock_id , setmedsuppcat]=useState();
     
-    // Add more fields as needed
-  });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setReceivedPurchases({
-      ...ReceivedPurchases,
-      [name]: value,
-    });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Handle form submission, e.g., sending data to the server or storing it in state.
-  };
+    
+    const token = localStorage.getItem('access_token');
+    console.log('Token:', token);
 
-  return (
-    <div className="medicine-form">
-      <div className='medtitle'>
-      <h2>Received Purchases</h2></div>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Status:</label>
-          <input
-            type="text"
-            name="status"
-            value={ReceivedPurchases.status}
-            onChange={handleChange}
-            required
-          />
-        </div>
+    const Changestatus=(e)=>{
+             setstatus(e.target.value)
+            
+             console.log(status)
+
+    }
+    const Changemedical_supply_quantity=(e)=>{
+        setmedical_supply_quantity(e.target.value)
+       
+        console.log(medical_supply_quantity)
+
+}
+    const Changemedicine_quantity=(e)=>{
+        
+       setmedicine_quantity(e.target.value)
+        console.log(medicine_quantity)
+    }
+
+    
+
+      const Changestock_id=(e)=>{
+        setmedsuppcat(e.target.value)
+       
+        console.log(stock_id)
+    
+      }
+      const handleSuccess = () => {
+        alert("This received purchase has been successfully created!");
+        // Redirect to the medicine categories table
+        navigate('/medicinetable');
+      };
+
+    function InsertFOS(){
+    const details = {
+        method: "POST", // or 'PUT'
+        headers: {
+            "Content-Type": "application/json",
+            'Accept': 'application/json',
+            'Authorization':`Bearer ${token}`
+        },
+        body: JSON.stringify(
+            {
+                status,
+                medical_supply_quantity,
+                medicine_quantity,
+                
+                stock_id
+            }
+        ),
+        }
+    
+        fetch('http://127.0.0.1:5000/received_purchases/create', details)
+        .then((response) => response.json())
+        .then((data) => {
+            // alert(data.message);
+            console.log("Success:", data);
+            handleSuccess();
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
+    }
+        
+  
+      const handleSubmit=(e)=>{ 
+        e.preventDefault();
+        
+        InsertFOS();
+        
       
-        <div className="form-group">
-          <label>Quantity:</label>
-          <input
-          type='number'
-            name="quantity"
-            value={ReceivedPurchases.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-     
-     
-        {/* Add more form fields for medicine details */}
-        <div className='submitdiv'>
-        <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
-  );
-};
+      }
+    return(
 
-export default ReceivedPurchasesForm;
+    <>
+    
+    {/* <div id="mysection"> */}
+    <div className="medicine-form">
+            
+                
+                <form onSubmit={(e) => handleSubmit(e)} >
+                    
+                  
+              <div className='medtitle'>              <h2>Create received purchase</h2></div>      
+              
+                    {/* <div id="signupform"> */}
+                        <div class="form-group">
+                            {/* <!-- from fontawesome i will get the icons for the input labels --> */}
+                            <label for="name">Status: </label>
+                         
+                            <input type="text" 
+                            required 
+                            name="status"
+                            value={status}
+                            onChange={Changestatus}/>
+                            
+                        </div>
+                        <div class="form-group">
+                            {/* <!-- from fontawesome i will get the icons for the input labels --> */}
+                            <label >medical_supply_quantity: </label>
+                           
+                            <input type="text" required unit_price="medical_supply_quantity"
+                           
+                            value={medical_supply_quantity}
+                            onChange={medical_supply_quantity}/>
+                            
+                        </div>
+                   
+                        <div class="form-group">
+                            {/* <!-- from fontawesome i will get the icons for the input labels --> */}
+                            <label for="stock">medicine_quantity : </label>
+                            <input type="text" 
+                            required 
+                            name="medicine_quantity"
+                            value={medicine_quantity}
+                            onChange={Changemedicine_quantity}/>
+                            
+                        </div>
+                        <div class="form-group">
+                            {/* <!-- from fontawesome i will get the icons for the input labels --> */}
+                            <label for="medicine_category_id">Stock ID: </label>
+                           
+                           
+                            <input type="number" 
+                            required 
+                            name="stock_id"
+                            value={stock_id}
+                            onChange={Changestock_id}/>
+                            
+                        </div>
+                      
+{/*                     
+                    </div> */}
+                   
+                
+                    <button id="button">Submit</button>
+                </form>
+            </div>
+        {/* </div> */}
+    {/* </div> */}
+
+    
+    </>
+    )
+    }

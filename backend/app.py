@@ -18,6 +18,7 @@ from backend.dispensed_stocks.model import DispensedStock
 
 
 app = create_app('development')
+app.config['JWT_SECRET_KEY'] = '1234'
 migrate = Migrate(app,db)
 jwt=JWTManager(app)
 

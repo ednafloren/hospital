@@ -85,6 +85,9 @@ const MedicalSuppliesTable = () => {
 <div className='space'>
       <div className='medtitle'>
       <h2>Medical Supplies </h2></div>
+      <div className='add'>
+        <Link to='/medicinesupplies' > <button type="submit">Add</button></Link>
+        </div>
       <div>
 <table>
 <thead>
@@ -139,9 +142,7 @@ const MedicalSuppliesTable = () => {
 
    
    
-      <div className='submitdiv'>
-        <Link to='/medicinesupplies' > <button type="submit">Add</button></Link>
-        </div>
+    
         </div>
         </>
   );

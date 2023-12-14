@@ -2,14 +2,15 @@
 import React, { useState,useEffect } from 'react';
 import '../styles/medicine.css';
 import '../styles/medicinetable.css';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import DeleteIcon  from '@mui/icons-material/Delete';
+import EditIcon  from '@mui/icons-material/Edit';
 
 const MedicalSuppliesCategoriesTable = () => {
   const [supplycat, setSupplycat] = useState([]);
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]); // Initialize with your data
-
+  const navigate=useNavigate();
   useEffect(() => {
     fetch('http://127.0.0.1:5000//medical_supply_categories/')
       .then(response => {
@@ -38,6 +39,23 @@ const MedicalSuppliesCategoriesTable = () => {
   if (error) {
     return <p>{error}</p>;
   }
+
+  const handleUpdateClick = async (itemId) => {
+    try {
+      const response = await fetch(`http://127.0.0.1:5000/medical_supply_categories/get/${itemId}`);
+
+      if (response.ok) {
+        const data = await response.json();
+        navigate(`/supplycatedit/${itemId}`);
+        // Handle the fetched data, you can navigate to an edit page, show a modal, etc.
+        console.log('Fetched item details:', data);
+      } else {
+        console.error('Error fetching item details:', response.status);
+      }
+    } catch (error) {
+      console.error('Error:', error.message);
+    }
+  };
   const handleDelete = async (itemId) => {
     try {
       // Make API request to delete item on the server
@@ -61,7 +79,12 @@ const MedicalSuppliesCategoriesTable = () => {
 <>
 <div className='space'>
       <div className='medtitle'>
+     
       <h2>Medical Supplies Categories</h2></div>
+      <div className='add'>
+        <Link to='/medicalSuppliesCategoriesForm' > <button type="submit">Add</button></Link>
+        </div>
+        <div>
       <table>
       <tr>
   <th>ID</th>
@@ -73,6 +96,7 @@ const MedicalSuppliesCategoriesTable = () => {
 <th>Created_at</th>
 
 <th>Updated_by</th>
+<th></th>
 <th></th>
 
 
@@ -90,7 +114,12 @@ const MedicalSuppliesCategoriesTable = () => {
               <td>{item.created_by}</td>
               <td>{item.created_at}</td>
               <td>{item.updated_at}</td>
-              <td><DeleteIcon className='delete' onClick={() => handleDelete(item.id)}/></td>
+             
+              <td>
+              <EditIcon className='EditIcon'onClick={() => handleUpdateClick(item.id)}/>
+         
+              </td>
+               <td><DeleteIcon className='delete' onClick={() => handleDelete(item.id)}/></td>
 
             </tr>
           )
@@ -98,12 +127,10 @@ const MedicalSuppliesCategoriesTable = () => {
         </tbody>
 
       </table>
-
+      </div>
    
    
-      <div className='submitdiv'>
-        <Link to='/medicalSuppliesCategoriesForm' > <button type="submit">Add</button></Link>
-        </div>
+   
         </div>
         </>
   );

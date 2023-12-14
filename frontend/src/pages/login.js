@@ -26,9 +26,11 @@ const LoginForm = () => {
       [name]: value,
     });
   };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   const validateForm = () => {
     let errors = {};
 
@@ -45,15 +47,43 @@ const LoginForm = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const storeToken = (token) => {
+  const storeTokenAndUser = (token, user) => {
     localStorage.setItem('access_token', token);
-    console.log('jwt token:',token)
-
+    localStorage.setItem('user', JSON.stringify(user));
   };
 
+const refreshAccessToken = async () => {
+    const accessToken = localStorage.getItem('access_token');
+  
+    if (!accessToken) {
+      console.error('Access token not found');
+      return;
+    }
+  
+    try {
+      const response = await fetch('http://localhost:5000/users/refresh', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      });
+  
+      const data = await response.json();
+  
+      if (response.ok) {
+        localStorage.setItem('access_token', data.access_token);
+      } else {
+        console.error('Refresh failed:', data);
+      }
+    } catch (error) {
+      console.error('Error refreshing access token:', error.message);
+    }
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (validateForm()) {
       try {
         const response = await fetch('http://127.0.0.1:5000/users/login', {
@@ -63,57 +93,20 @@ const LoginForm = () => {
           },
           body: JSON.stringify(login),
         });
-  
+
         const data = await response.json();
-  
+
         if (response.ok) {
           console.log('Login successful');
 
-  
-          // Store the token in local storage
-          storeToken(data.access_token);
-  
-          // Fetch the user details after successful login
-          const userResponse = await fetch('http://127.0.0.1:5000/users/get_user_details', {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${data.access_token}`,
-            },
-          });
-  
-          const userData = await userResponse.json();
-  
-          if (userResponse.ok) {
-            console.log('User details fetched successfully', userData.user_details);
-         
-  
-            // Store the user data in local storage
-            localStorage.setItem('user', JSON.stringify(userData.user_details));
-  
-            // Set the user details in the state or wherever you need
-            // For example, you can use React context or set it in the component state
-            // setLoggedInUser(userData.user_details);
-  
-            navigate('/home');
-          } else {
-            console.error('Error fetching user details:', userData.message);
-          }
+          storeTokenAndUser(data.access_token, data.user);
 
-
-          
-          // Redirect or perform other actions after successful login
-
-         
+          // Optionally, you can set user details in your React state or context here
 
           navigate('/home');
-
         } else {
-          if (response.status === 400) {
-            // Bad Request
-            setServerError(data.message);
-          } else if (response.status === 401) {
-            // Unauthorized (invalid password)
-            setFormErrors({ password: 'Invalid password' });
+          if (data.error) {
+            setServerError(data.error);
           } else {
             console.error('Error logging in:', data.message || data);
           }
@@ -125,7 +118,6 @@ const LoginForm = () => {
       console.log('Form has validation errors. Cannot submit.');
     }
   };
-
 
   return (
     <div className="login-form">

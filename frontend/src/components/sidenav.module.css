@@ -1,10 +1,10 @@
-.sidenav {
+/* .sidenav {
     width: 250px;
     transition: width 0.3s ease-in-out;
     height: 100vh;
     background-color: rgb(47, 114, 173) ;
-    /* padding-top: 10px; */
-   /* position: fixed; */
+    padding-top: 10px;
+   background-position-y: fixed;
     margin-top: 64px;
 }
  
@@ -12,7 +12,7 @@
     composes: sidenav;
     transition: width 0.3s ease-in-out;
     width: 60px;
-    /* height: 100hv; */
+    height: 100hv;
     background-color: rgb(47, 114, 173) ;
 
 
@@ -52,10 +52,10 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
- /* .img{
+ .img{
     width: 50px;
       height: 50px;  
-  } */
+  }
  
 .sidenavClosed .Icon {
 margin-left: 20px;
@@ -131,4 +131,167 @@ margin-left: 20px;
                     text-align:center
                 }
     } 
+     */
+
+     .sidenav {
+        width: 250px;
+        transition: width 0.3s ease-in-out;
+        height: 100vh;
+        background-color: rgb(47, 114, 173);
+        position: fixed;
+        top: 64px;
+        z-index: 1;
+    }
+    
+    .sidenavClosed {
+        composes: sidenav;
+        transition: width 0.3s ease-in-out;
+        width: 60px;
+    }
+    
+    .sideitem {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px;
+        cursor: pointer;
+        color: white;
+        text-decoration: none;
+    }
+    
+    .sidenavClosed .linkText {
+        padding-left: 16px;
+        visibility: hidden;
+    }
+    
+    .linkText {
+        padding-left: 16px;
+    }
+    
+    .userp {
+        text-align: center;
+        color: rgb(172, 172, 172);
+        font-weight: 300;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    .userp p {
+        margin-top: 1px;
+        color: rgb(172, 172, 172);
+        font-weight: 300;
+        font-size: 12px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    .sidenavClosed .Icon,
+    .sidenavClosed .AccountCircleIcon
+    {
+        margin-left: 0px;
+        margin-right: 10PX;
+        width: 35px;
+        height: 35px;
+    
+        text-align: center;
+    }
+    .sidenavClosed p{
+        text-align: center;
+        font-size: 10px;  
+    }
+    
+    .sideitem:hover {
+        color: aqua;
+        background-color: rgb(38, 78, 113);
+    }
+    
+    .sideitem:focus {
+        background-color: rgb(34, 71, 104);
+    }
+    
+    .sideitem {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        font-size: 14px;
+    }
+    
+    .menuBtn {
+        align-self: center;
+        align-self: flex-start;
+        justify-self: flex-end;
+        color: white;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        /* padding-left: 20px; */
+    }
+    .menuBtn img{
+        margin-right: 180px;
+      
+    }
+    
+    @media (min-width: 481px) and (max-width: 768px) {
+        .sidenav {
+            width: 60px;
+        }
+    
+        .linkText {
+            display: none;
+        }
+    
+        .sidenav .AccountCircleIcon {
+            margin-right: 20px;
+            width: 35px;
+            /* height: 35px;
+            font-size: 10px; */
+            text-align: center;
+        }
+        .sidenav .Icon {
+            margin-right: 20px;
+            width: 35px;
+            /* height: 35px;
+            font-size: 10px; */
+            text-align: center;
+        }
+    
+        .sidenav p {
+            margin-left: 10px;
+            width: 35px;
+            height: 35px;
+            font-size: 10px;
+            text-align: center;
+        }
+    }
+
+    @media (min-width: 769px) and (max-width: 1080px) {
+        .sidenav {
+            width: 60px;
+        }
+    
+        .linkText {
+            display: none;
+        }
+    
+        .sidenav .AccountCircleIcon {
+            margin-right: 20px;
+            width: 35px;
+            /* height: 35px;
+            font-size: 10px; */
+            text-align: center;
+        }
+        .sidenav .Icon {
+            margin-right: 20px;
+            width: 35px;
+            /* height: 35px;
+            font-size: 10px; */
+            text-align: center;
+        }
+    
+        .sidenav p {
+            margin-left: 10px;
+            width: 35px;
+            height: 35px;
+            font-size: 10px;
+            text-align: center;
+
+        }
+
+    }
+   
     

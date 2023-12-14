@@ -1,0 +1,17 @@
+.value{
+    position:absolute;
+    top: 25%;
+    right: 10%;
+    padding: 5px;
+    background-color: brown;
+    color: white;
+
+}
+.notification-text{
+    position:absolute;
+    top: 10%;
+    right:14% ;
+}
+.noticon img{
+    /* width: 250px; */
+}

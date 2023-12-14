@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './App.css';
 import './index.css';
+import {NotificationProvider}  from './pages/usecontextpage';
+
 import { BrowserRouter, Routes ,Route} from 'react-router-dom';
 import Navbar from './pages/nav';
 import Heading from './pages/heading';
@@ -28,73 +30,79 @@ import StockOrdersForm from './pages/stockOrderForm';
 import DispensedstockTable from './pages/dispensedstocktable';
 import EditForm from './pages/editform';
 import MedicalSupplyEdit from './pages/medicalsupllyedit';
+import MedicineCatEdit from './pages/medicalcategoryEdit';
+import SupplyCatEdit from './pages/medicalsupplycategoryEdit';
 const root = ReactDOM.createRoot(document.getElementById('root'));
- 
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
 
-
+    <NotificationProvider>
    
     <Routes>
     <Route path='/'element={<LoginForm/>}/>
   <Route path='/register'element={<RegisterForm/>}/>
 
   <Route path='/home'element={[, <div className="App">
-       <Sidenav/>,<Navbar/>,<main><Home/></main></div>]}/>
+       <Sidenav/>,<main><Home/></main>,<Navbar/></div>]}/>
        <Route path='/edit/:itemId'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main><MedicalItemEdit/></main></div>]}/>
+       <Sidenav/>,<main><MedicalItemEdit/>,<Navbar/></main></div>]}/>
+       <Route path='/catedit/:itemId'element={[ <div className="App">
+       <Sidenav/>,<main><MedicineCatEdit/>,<Navbar/></main></div>]}/>
  
        <Route path='/editsupply/:itemId'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main><MedicalSupplyEdit/></main></div>]}/>
+       <Sidenav/>,<main><MedicalSupplyEdit/></main>,,<Navbar/></div>]}/>
+       <Route path='/supplycatedit/:itemId'element={[ <div className="App">
+       <Sidenav/>,<main><SupplyCatEdit/>,<Navbar/></main></div>]}/>
  
 
       <Route path='/medicineCategoryTable'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main>< MedicineCategoryTable/></main></div>]}/>
+       <Sidenav/>,<main>< MedicineCategoryTable/>,<Navbar/></main></div>]}/>
  
        <Route path='/medicalSuppliesCategoriesForm'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main>< MedicalSuppliesCategoriesForm/></main></div>]}/>
+       <Sidenav/>,<main>< MedicalSuppliesCategoriesForm/>,<Navbar/></main></div>]}/>
        <Route path='/medicalSuppliesCategoriesTable'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main>< MedicalSuppliesCategoriesTable/></main></div>]}/>
+       <Sidenav/>,<main>< MedicalSuppliesCategoriesTable/></main>,<Navbar/>,</div>]}/>
  
- <Route path='/medicinetable'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main><MedicineTable/></main></div>]}/>
+ <Route path='/medicinetable'element={[ <div className="App"> <Sidenav/>
+       ,<main><MedicineTable/></main>,<Navbar/></div>]}/>
        
-       <Route path='/medicineForm'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main><MedicineForm/></main></div>]}/>
+       <Route path='/medicineForm'element={[ <div className="App"> <Sidenav/>
+       ,<main><MedicineForm/></main>,<Navbar/></div>]}/>
 
-       <Route path='/medicinecategoriesForm'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,,<main><MedicineCategoriesForm/></main></div>]}/>
+       <Route path='/medicinecategoriesForm'element={[ <div className="App"> <Sidenav/>
+       ,<main><MedicineCategoriesForm/></main>,<Navbar/>,</div>]}/>
   <Route path='/medicinesupplies'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,
-       <main><MedicalSupplies/></main></div>]}/>
+       <Sidenav/>,
+       <main><MedicalSupplies/></main>,<Navbar/>,,<Navbar/></div>]}/>
        
-       <Route path='/medicalSuppliesTable'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,
-       <main><MedicalSuppliesTable/></main></div>]}/>
+       <Route path='/medicalSuppliesTable'element={[ <div className="App"><Sidenav/>,   <main><MedicalSuppliesTable/></main>,  <Navbar/>,
+      
+   </div>]}/>
 
-       <Route path='/receivedPurchaseForm'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main><ReceivedPurchasesForm/></main></div>]}/>
+       <Route path='/receivedPurchasesForm'element={[ <div className="App">
+       <Sidenav/>,<main><ReceivedPurchasesForm/></main>,<Navbar/>,</div>]}/>
 
        <Route path='/receivedPurchasesTable'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main><ReceivedPurchasesTable/></main></div>]}/>
+       <Sidenav/>,<main><ReceivedPurchasesTable/></main>,<Navbar/>,</div>]}/>
 
        <Route path='/stockOrderTable'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main><StockOrdersTable/></main></div>]}/>
+       <Sidenav/>,<main><StockOrdersTable/></main>,<Navbar/>,</div>]}/>
 
        <Route path='/stockOrderForm'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main><StockOrdersForm/></main></div>]}/>
+       <Sidenav/>,<main><StockOrdersForm/></main>,<Navbar/>,</div>]}/>
 
        <Route path='/dispensedstocktable'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main><DispensedstockTable/></main></div>]}/>
+       <Sidenav/>,<main><DispensedstockTable/></main>,<Navbar/>,</div>]}/>
 
 
 
  <Route path='/Report'element={[ <div className="App">
-       <Sidenav/><main><Report/></main></div>]}/>
+       <Sidenav/><main><Report/></main>,<Navbar/>,</div>]}/>
 
   <Route path='/Search'element={[ <div className="App">
-       <Sidenav/>,<Navbar/>,<main><Search/></main></div>]}/>
+       <Sidenav/>,<main><Search/></main>,<Navbar/>,</div>]}/>
 
    
  
@@ -108,6 +116,7 @@ root.render(
       </Routes>
          
 
+      </NotificationProvider>
 
 
     </BrowserRouter>

@@ -1,39 +1,37 @@
 
 import React, { useState, useEffect } from 'react';
-import CloseIcon from '@mui/icons-material/Close';
 
 import { Link,useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import '../styles/MedicalItemEdit.css'
-const MedicalSupplyEdit = () => {
+import CloseIcon from '@mui/icons-material/Close';
+
+const SupplyCatEdit = () => {
   const { itemId } = useParams();
   const navigate = useNavigate();
   const [itemDetails, setItemDetails] = useState(null);
   const [updatedItem, setUpdatedItem] = useState({
     name: '',
-    medical_supply_category_id: 0,
-    stock: '',
-    unit_price: 0,
-   
+  
     
   });
 
   useEffect(() => {
     const fetchItemDetails = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:5000/medical_supplies/get/${itemId}`);
+        const response = await fetch(`http://127.0.0.1:5000/medical_supply_categories/get/${itemId}`);
 
         if (response.ok) {
           const data = await response.json();
           console.log('Fetched item details:', data);
-
           
-          setItemDetails(data.MedicalSupply);
+          
+
+          setItemDetails(data.MedicalSupplyCategory);
           setUpdatedItem({
-            name: data.MedicalSupply.name,
-            medical_supply_category_id: data.MedicalSupply.medical_supply_category_id,
-            unit_price: data.MedicalSupply.unit_price,
-            stock: data.MedicalSupply.stock,
+            name: data.MedicalSupplyCategory.name,
+          
+            
           });
         } else {
           console.error('Error fetching item details:', response.status);
@@ -47,7 +45,7 @@ const MedicalSupplyEdit = () => {
   }, [itemId]);
 
   const handleClose = () => {
-    navigate('/MedicalSuppliesTable');
+    navigate('/medicalSuppliesCategoriesTable');
   };
 
   const handleChange = (e) => {
@@ -58,11 +56,10 @@ const MedicalSupplyEdit = () => {
   };
 
   const handleUpdate = async () => {
-   
-      
-            
+  
+    
         
-      const response = await fetch(`http://127.0.0.1:5000/medical_supplies/update/${itemId}`, {
+      const response = await fetch(`http://127.0.0.1:5000/medical_supply_categories/update/${itemId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -72,11 +69,11 @@ const MedicalSupplyEdit = () => {
 
       if (response.ok) {
         console.log('Item updated successfully');
-        navigate('/MedicalSuppliesTable');
+        navigate('/medicalSuppliesCategoriesTable');
       } else {
         console.error('Error updating item:', response.status);
       }
- 
+
       
   };
 
@@ -90,7 +87,7 @@ const MedicalSupplyEdit = () => {
         <span className="close-icon"><CloseIcon /></span>
       </div>
 
-      <h2>Edit Medical Supply</h2>
+      <h2>Edit Medical Supply Category</h2>
       <p>ID: {itemDetails.id}</p>
       <form className='myform'>
         <label>
@@ -103,44 +100,12 @@ const MedicalSupplyEdit = () => {
             onChange={handleChange}
           />
         </label>
-        <label>
-          Category Id:
-          <input
-            type="number"
-            name=" medical_supply_category_id"
-            placeholder={itemDetails. medical_supply_category_id}
-            value={updatedItem. medical_supply_category_id}
-            onChange={handleChange}
-          />
-        </label>
-        <label>
-          Unit Price:
-          <input
-            type="number"
-            name=" unit_price"
-            placeholder={itemDetails. unit_price}
-            value={updatedItem. unit_price}
-            onChange={handleChange}
-          />
-        </label>
-   
-   
-        <label>
-          Stock:
-          <input
-            type="text"
-            name="stock"
-            placeholder={itemDetails.stock}
-            value={updatedItem.stock}
-            onChange={handleChange}
-          />
-        </label>
+        
         {/* Add other form fields using itemDetails */}
       </form>
       <button onClick={handleUpdate} className='update'>Save</button>
     </div>
   );
-
 };
 
-export default MedicalSupplyEdit;
+export default SupplyCatEdit;

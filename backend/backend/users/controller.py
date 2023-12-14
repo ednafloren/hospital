@@ -7,16 +7,59 @@ from datetime import datetime
 from flask_jwt_extended import jwt_required
 from flask_cors import CORS
 from flask_login import login_required, current_user
-from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, unset_jwt_cookies
+from flask_jwt_extended import JWTManager,jwt_required, get_jwt_identity, create_access_token, unset_jwt_cookies
 
 from werkzeug.security import generate_password_hash,check_password_hash
 
 
 users = Blueprint('users', __name__, url_prefix='/users')
 
+# /dfvghjkl;
+
+
+
+
+# app.config['JWT_SECRET_KEY'] = '1234'
+# jwt = JWTManager(app)
+
+@users.route('/login', methods=['POST'])
+def login():
+    email = request.json.get("email")
+    password = request.json.get("password")
+    user = User.query.filter_by(email=email).first()
+
+    if not email or not password:
+        return jsonify({"message": "Both email and password are required"}), 400
+
+    if user:
+        password_hash = check_password_hash(user.password, password)
+        if password_hash:
+            access_token = create_access_token(identity=user.id)
+            return jsonify({"message": "User logged in successfully", "access_token": access_token, "user": user}), 200
+        else:
+            return jsonify({"message": "Invalid password"}), 400
+    else:
+        return jsonify({"message": "Email address doesn't exist"}), 400
+
+@users.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    user_identity = get_jwt_identity()
+    return jsonify(logged_in_as=user_identity), 200
+
+
+
+
+
 
 CORS(users, supports_credentials=True)
 
+@users.route('/refresh', methods=['POST'])
+@jwt_required()
+def refresh():
+    current_user = get_jwt_identity()
+    new_access_token = create_access_token(identity=current_user)
+    return jsonify(access_token=new_access_token), 200
 
 
 #get all users
@@ -137,26 +180,26 @@ def check_contact():
 #user login
 
 
-@users.route("/login", methods=["POST"])
+# @users.route("/login", methods=["POST"])
 
 #@jwt_required()
-def login():
-    email = request.json.get("email")
-    password = request.json.get("password")
-    user=User.query.filter_by(email=email).first()
+# def login():
+#     email = request.json.get("email")
+#     password = request.json.get("password")
+#     user=User.query.filter_by(email=email).first()
 
-    if not email or not password:
-        return jsonify({"message":"Both email and password are required"}),400
+#     if not email or not password:
+#         return jsonify({"message":"Both email and password are required"}),400
     
-    if user:
-        password_hash= check_password_hash(user.password,password)
-        if password_hash:
-            access_token= create_access_token(identity=user.id)
-            return jsonify({"message":"User logged in successfully","access_token":access_token,"user":user}),200
-        else:
-            return jsonify({"message":"Invalid password"}),400
-    else:
-        return jsonify({"message":"email address doesn't exist"}),400
+#     if user:
+#         password_hash= check_password_hash(user.password,password)
+#         if password_hash:
+#             access_token= create_access_token(identity=user.id)
+#             return jsonify({"message":"User logged in successfully","access_token":access_token,"user":user}),200
+#         else:
+#             return jsonify({"message":"Invalid password"}),400
+#     else:
+#         return jsonify({"message":"email address doesn't exist"}),400
 
 
 

@@ -1,7 +1,7 @@
 .editpage{
     margin: 100px;
-    background: rgb(181, 50, 193);
-    padding: 10px;
+    background: rgb(193, 201, 213);
+    padding: 80px;
 
     
 }
@@ -9,6 +9,38 @@
     margin-top: 20px;
     
 }
+.myform label{
+  margin: 5px 0px 20px 0px;
+
+}
+.myform input{
+  margin: 5px 0px 20px 0px;
+}
+
+.close-icon-box:hover{
+  background-color: rgb(198, 11, 30);
+}
+.close-icon:hover{
+  color: aliceblue;
+}
+.close-icon-box {
+    position: fixed;
+    top: 150px; /* Adjust the top distance as needed */
+    right: 130px; /* Adjust the right distance as needed */
+    display: inline-block;
+    height: 24px;
+    padding: 4px;
+    background-color: #d2dbf8;
+    border: none;
+    border-radius: 0px;
+    cursor: pointer;
+    z-index: 2000; /* Set a higher z-index value */
+  }
+  
+ ccc {
+    font-size: 18px;
+    color: #333; /* Change the color as needed */
+  }
 /* form{
     background: rgb(181, 50, 193);
 } */
