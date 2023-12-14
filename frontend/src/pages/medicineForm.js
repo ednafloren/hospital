@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
+=======
+import {useEffect, useState} from "react";
+>>>>>>> b59e50532c9a067bb7b9ab612882ced7a1fe2dc8
 import { useNavigate } from "react-router-dom";
 
 export default function MedicineForm() {
@@ -163,6 +167,80 @@ export default function MedicineForm() {
 
         </form>
       </div>
+<<<<<<< HEAD
     </>
   )
 }
+=======
+      <form onSubmit={handleSubmit}>
+      <div className="form-group">
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={medicine.name}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Category:</label>
+          <input
+            type="text"
+            name="category"
+            value={medicine.category}
+            onChange={handleChange}
+            required
+          />
+        </div>
+       
+        <div className="form-group">
+          <label>Unit Price:</label>
+          <input
+          type='number'
+            name="unitprice"
+            value={medicine.unitprice}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label>Stock:</label>
+          <input
+          type='number'
+            name="stock"
+            value={medicine.stock}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        
+        <div className="form-group">
+          <label>Expiry Date:</label>
+          <input
+          type='date'
+            name="expirydate"
+            value={medicine.expiry_date}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        {/* <div className="form-group">
+          <label>Image:</label>
+          <input
+          type='file'
+            name="image"
+            value={medicine.image}
+            onChange={handleChange}
+            required
+          />
+        </div>
+       */}
+        <div className='submitdiv'>
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+  );
+};
+>>>>>>> b59e50532c9a067bb7b9ab612882ced7a1fe2dc8

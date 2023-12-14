@@ -273,10 +273,20 @@ const MedicineTable = () => {
 
             <th>Created By</th>
             <th>Created At</th>
+
+
+            <th>Updated At</th>
+            <th>Expiry Date</th>
+            
+
+            
+
+
             <th>Updated At</th>
             <th>Expiry Date</th>
             <th></th>
             <th></th>
+
           </tr>
         </thead>
         <tbody>
@@ -300,7 +310,9 @@ const MedicineTable = () => {
               <td>{item.created_by}</td>
               <td>{item.created_at}</td>
               <td>{item.updated_at}</td>
+
               
+
             <td>{item.expiry_date}</td>
            
                 <td>
@@ -309,6 +321,12 @@ const MedicineTable = () => {
               </td>
 
               <td><DeleteIcon className='delete' onClick={() => handleDelete(item.id)}/></td>
+
+
+
+              
+
+
 
             </tr>
           )

@@ -30,8 +30,12 @@ import StockOrdersForm from './pages/stockOrderForm';
 import DispensedstockTable from './pages/dispensedstocktable';
 import EditForm from './pages/editform';
 import MedicalSupplyEdit from './pages/medicalsupllyedit';
+<<<<<<< HEAD
 import MedicineCatEdit from './pages/medicalcategoryEdit';
 import SupplyCatEdit from './pages/medicalsupplycategoryEdit';
+=======
+
+>>>>>>> b59e50532c9a067bb7b9ab612882ced7a1fe2dc8
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
@@ -96,7 +100,7 @@ root.render(
        <Route path='/dispensedstocktable'element={[ <div className="App">
        <Sidenav/>,<main><DispensedstockTable/></main>,<Navbar/>,</div>]}/>
 
-
+      
 
  <Route path='/Report'element={[ <div className="App">
        <Sidenav/><main><Report/></main>,<Navbar/>,</div>]}/>

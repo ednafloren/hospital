@@ -99,9 +99,52 @@ const refreshAccessToken = async () => {
         if (response.ok) {
           console.log('Login successful');
 
+<<<<<<< HEAD
           storeTokenAndUser(data.access_token, data.user);
+=======
+
+
+
+  
+          // Store the token in local storage
+          storeToken(data.access_token);
+  
+          // Fetch the user details after successful login
+          const userResponse = await fetch('http://127.0.0.1:5000/users/get_user_details', {
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${data.access_token}`,
+            },
+          });
+  
+          const userData = await userResponse.json();
+  
+          if (userResponse.ok) {
+            console.log('User details fetched successfully', userData.user_details);
+         
+  
+            // Store the user data in local storage
+            localStorage.setItem('user', JSON.stringify(userData.user_details));
+  
+            // Set the user details in the state or wherever you need
+            // For example, you can use React context or set it in the component state
+            // setLoggedInUser(userData.user_details);
+  
+            navigate('/home');
+          } else {
+            console.error('Error fetching user details:', userData.message);
+          }
+>>>>>>> b59e50532c9a067bb7b9ab612882ced7a1fe2dc8
 
           // Optionally, you can set user details in your React state or context here
+
+
+
+          
+          // Redirect or perform other actions after successful login
+
+
+
 
           navigate('/home');
         } else {

@@ -43,6 +43,87 @@ def get_total_medicines():
 # Creating medicines
 # ...
 
+<<<<<<< HEAD
+=======
+@medicines.route('/create', methods=['POST'])
+@jwt_required()
+def create_new_medicine():
+    data = request.get_json()
+
+    # Check if 'stock' and 'expiry_date' fields are present in the data
+    if 'stock' not in data:
+        return jsonify({'error': "Stock is required"}), 400
+    if 'expiry_date' not in data:
+        return jsonify({'error': "Expiry date is required"}), 400
+
+    # Extract data from the request
+    name = data['name']
+    unit_price = data['unit_price']
+    image = data['image']
+    stock = data['stock']
+    expiry_date = data['expiry_date']
+    medicine_category_id = data['medicine_category_id']
+    created_by = get_jwt_identity()
+
+    # Validations...
+    
+    def is_near_expiry(expiry_date, days_before=2):
+        """
+        Check if the medicine is nearing expiry.
+
+        Parameters:
+        - expiry_date (str): Expiry date of the medicine in the format '%Y-%m-%d'.
+        - days_before (int): Number of days before expiry to consider as nearing expiry.
+
+        Returns:
+        - bool: True if nearing expiry, False otherwise.
+        """
+        expiry_datetime = datetime.strptime(expiry_date, "%Y-%m-%d")
+        current_datetime = datetime.now()
+        days_remaining = (expiry_datetime - current_datetime).days
+        return 0 < days_remaining <= days_before
+
+    # Validation for near expiry
+    if is_near_expiry(expiry_date):
+        return jsonify({'error': "Medicine is nearing expiry"}), 400
+    if not name:
+        return jsonify({'error': "Medicine name is required"})
+    if not unit_price:
+        return jsonify({'error': "The cost of Medicine per unit is required"})
+    if not image:
+        return jsonify({'error': "Medicine image is required"})
+    if not stock:
+        return jsonify({'error': "The quantity in stock is required"})
+    if not medicine_category_id:
+        return jsonify({'error': "The medicine category name is required"})
+
+         
+   
+
+    if Medicine.query.filter_by(name=name).first() is not None and Medicine.query.filter_by(created_by=created_by).first():
+        return jsonify({'error': "This Medicine  already exsists"}), 409 
+    
+
+    medicines = Medicine(
+        name=name,
+        created_by=created_by,
+        unit_price=unit_price,
+        image=image,
+        stock=stock,
+        expiry_date=expiry_date,
+        medicine_category_id=medicine_category_id,
+        created_at=datetime.now(),
+        updated_at=datetime.now()
+    )
+
+    # Inserting values
+    db.session.add(medicines)
+    db.session.commit()
+    
+    return jsonify({'message': 'New Medical supply item created successfully', 'data': [medicines.id, medicines.name, medicines.created_by, medicines.created_at, medicines.expiry_date, medicines.updated_at, medicines.unit_price, medicines.image, medicines.stock, medicines.medicine_category_id]}), 201
+
+# Other routes...
+>>>>>>> b59e50532c9a067bb7b9ab612882ced7a1fe2dc8
 @medicines.route('/get/<int:id>', methods=['GET'])
 def get_medicines(id):
     medicine = Medicine.query.get(id)
@@ -148,9 +229,13 @@ def delete_medicine(id):
         return jsonify({"message": "Medicine deleted successfully."})
     return jsonify({"error": "This Medicine does not exist"}), 404
 
-@medicines.route('/near-expiry', methods=['GET'])
 def get_near_expiry_medicines():
+<<<<<<< HEAD
     days_before_expiry = 7
+=======
+    # Get medicines nearing expiry (e.g., within the next 2 days)
+    days_before_expiry = 2  # Change this to 2
+>>>>>>> b59e50532c9a067bb7b9ab612882ced7a1fe2dc8
     current_date = datetime.now()
     expiry_threshold = current_date + timedelta(days=days_before_expiry)
 
@@ -171,7 +256,6 @@ def get_near_expiry_medicines():
         "total": len(near_expiry_medicines),
         "message": "Medicines nearing expiry retrieved successfully",
     }), 200
-
 @medicines.route('/expired', methods=['GET'])
 def get_expired_medicines():
     current_date = datetime.now()
