@@ -1,0 +1,36 @@
+/* Add this CSS to your existing stylesheet or create a new one */
+
+.success-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: whitesmoke;
+    color: rgb(22, 159, 4);
+    padding: 40px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .success-modal p {
+    margin: 5px;
+    font-size: 18px;
+    font-weight: 400;
+    color: black;
+  }
+  
+  /* Add animation for a smooth fade-in effect */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .success-modal {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  

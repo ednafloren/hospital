@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+
+
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -26,11 +28,9 @@ const LoginForm = () => {
       [name]: value,
     });
   };
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   const validateForm = () => {
     let errors = {};
 
@@ -47,43 +47,15 @@ const LoginForm = () => {
     return Object.keys(errors).length === 0;
   };
 
-  const storeTokenAndUser = (token, user) => {
+  const storeToken = (token) => {
     localStorage.setItem('access_token', token);
-    localStorage.setItem('user', JSON.stringify(user));
+    console.log('jwt token:',token)
+
   };
 
-const refreshAccessToken = async () => {
-    const accessToken = localStorage.getItem('access_token');
-  
-    if (!accessToken) {
-      console.error('Access token not found');
-      return;
-    }
-  
-    try {
-      const response = await fetch('http://localhost:5000/users/refresh', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      });
-  
-      const data = await response.json();
-  
-      if (response.ok) {
-        localStorage.setItem('access_token', data.access_token);
-      } else {
-        console.error('Refresh failed:', data);
-      }
-    } catch (error) {
-      console.error('Error refreshing access token:', error.message);
-    }
-  };
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (validateForm()) {
       try {
         const response = await fetch('http://127.0.0.1:5000/users/login', {
@@ -93,15 +65,12 @@ const refreshAccessToken = async () => {
           },
           body: JSON.stringify(login),
         });
-
+  
         const data = await response.json();
-
+  
         if (response.ok) {
           console.log('Login successful');
 
-<<<<<<< HEAD
-          storeTokenAndUser(data.access_token, data.user);
-=======
 
 
 
@@ -134,9 +103,12 @@ const refreshAccessToken = async () => {
           } else {
             console.error('Error fetching user details:', userData.message);
           }
->>>>>>> b59e50532c9a067bb7b9ab612882ced7a1fe2dc8
 
-          // Optionally, you can set user details in your React state or context here
+
+          
+          // Redirect or perform other actions after successful login
+
+         
 
 
 
@@ -147,9 +119,14 @@ const refreshAccessToken = async () => {
 
 
           navigate('/home');
+
         } else {
-          if (data.error) {
-            setServerError(data.error);
+          if (response.status === 400) {
+            // Bad Request
+            setServerError(data.message);
+          } else if (response.status === 401) {
+            // Unauthorized (invalid password)
+            setFormErrors({ password: 'Invalid password' });
           } else {
             console.error('Error logging in:', data.message || data);
           }
@@ -161,6 +138,7 @@ const refreshAccessToken = async () => {
       console.log('Form has validation errors. Cannot submit.');
     }
   };
+
 
   return (
     <div className="login-form">

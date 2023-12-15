@@ -73,8 +73,8 @@ const StockOrdersTable = () => {
 <th>Medicine Quantity</th> */}
 <th>medicine</th>
 <th>medical supply </th>
-<th>medical supply quantity </th>
-<th>medicine quantity </th>
+{/* <th>medical supply quantity </th>
+<th>medicine quantity </th> */}
 <th>Created_by</th>
 
 <th>Created_at</th>
@@ -97,8 +97,8 @@ const StockOrdersTable = () => {
               <td>{item.medicine_quantity}</td> */}
               <td>{item.medicine_id}</td>
               <td>{item.medical_supply_id}</td>
-              <td>{item.medicine_quantity}</td>
-              <td>{item.medical_supply_quantity}</td>
+              {/* <td>{item.medicine_quantity}</td>
+              <td>{item.medical_supply_quantity}</td> */}
 
               <td>{item.created_by}</td>
               <td>{item.created_at}</td>

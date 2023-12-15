@@ -1,12 +1,19 @@
-// MedicineForm.js
+
+
 import React, { useState } from 'react';
 import '../styles/medicine.css'
-
+import CloseIcon from '@mui/icons-material/Close';
+import { useParams, useNavigate } from 'react-router-dom';
+import SuccessModal from '../components/success'
 const MedicalSuppliesCategoriesForm = () => {
+  const navigate = useNavigate();
+  const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+  
   const [medicalSupplies, setMedicalSuppliesCategoriesForm] = useState({
     name: '',
  
-    // Add more fields as needed
+
+    
   });
 
   const handleChange = (e) => {
@@ -16,14 +23,26 @@ const MedicalSuppliesCategoriesForm = () => {
       [name]: value,
     });
   };
+  const handleSuccess = () => {
+    setSuccessModalOpen(true);
+  };
+  const closeSuccessModal = () => {
+    setSuccessModalOpen(false);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission, e.g., sending data to the server or storing it in state.
-  };
 
+    
+  };
+  const handleClose = () => {
+    navigate('/medicineCategoryTable');
+  };
   return (
     <div className="medicine-form">
+        <div className="close-icon-box" onClick={handleClose}>
+        <span className="close-icon"><CloseIcon /></span>
+      </div>
       <div className='medtitle'>
       <h2>Medical Supplies Categories</h2></div>
       <form onSubmit={handleSubmit}>
@@ -43,7 +62,17 @@ const MedicalSuppliesCategoriesForm = () => {
         <button type="submit">Submit</button>
         </div>
       </form>
+      {isSuccessModalOpen && (
+        <SuccessModal
+          message="Medicine Successfully added!"
+          onClose={closeSuccessModal}
+          redirectPath="/medicinetable"
+          delay={3000} 
+          
+        />
+      )}
     </div>
+    
   );
 };
 export default MedicalSuppliesCategoriesForm;

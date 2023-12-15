@@ -5,11 +5,15 @@ import '../styles/medicinetable.css';
 import { Link,useNavigate } from 'react-router-dom';
 import DeleteIcon  from '@mui/icons-material/Delete';
 import EditIcon  from '@mui/icons-material/Edit';
+import ConfirmDeleteDialog from '../components/confirmdelete';
 
 const MedicalSuppliesTable = () => {
   const [supply, setSupply] = useState([]);
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]); // Initialize with your data
+  const [itemIdToDelete, setItemIdToDelete] = useState(null);
+  const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [tableData, setTableData] = useState([]);
   const navigate=useNavigate();
   useEffect(() => {
     fetch('http://127.0.0.1:5000/medical_supplies/')
@@ -38,23 +42,55 @@ const MedicalSuppliesTable = () => {
   if (error) {
     return <p>{error}</p>;
   }
-  const handleDelete = async (itemId) => {
+  const handleDelete = (itemId) => {
+    // Set the item ID to delete in the state
+    setItemIdToDelete(itemId);
+    // Open the confirmation dialog
+    setConfirmDialogOpen(true);
+  };
+
+  const handleCancelDelete = () => {
+    // Close the confirmation dialog
+    setConfirmDialogOpen(false);
+    // Reset the item ID to delete
+    setItemIdToDelete(null);
+  };
+
+  const handleConfirmDelete = async () => {
     try {
       // Make API request to delete item on the server
-      const response=await fetch(`http://127.0.0.1:5000/medical_supplies/delete/${itemId}`, {
+      const response = await fetch(`http://127.0.0.1:5000/medicines/delete/${itemIdToDelete}`, {
         method: 'DELETE',
         // Add headers if needed
       });
-      if (response.ok) {
-             // Update local state
-      const updatedItems = items.filter(item => item.id !== itemId);
-      setItems(updatedItems);
-        console.log('delete');
-      }
   
- 
-    }catch (error) {
+      if (response.ok) {
+        // Fetch updated data after successful deletion
+        const updatedDataResponse = await fetch('http://127.0.0.1:5000/medicines/');
+        if (updatedDataResponse.ok) {
+          const updatedData = await updatedDataResponse.json();
+          console.log('Updated Data:', updatedData);
+  
+          if (updatedData && updatedData.success && updatedData.data) {
+            // Update local state with the new data
+            setTableData(updatedData.data);
+            console.log('Item deleted successfully');
+          } else {
+            setError('Updated data structure is not as expected.');
+          }
+        } else {
+          console.error('Error fetching updated data:', updatedDataResponse.status);
+        }
+      } else {
+        console.error('Error deleting item:', response.status);
+      }
+    } catch (error) {
       console.error('Error deleting item:', error);
+    } finally {
+      // Close the confirmation dialog
+      setConfirmDialogOpen(false);
+      // Reset the item ID to delete
+      setItemIdToDelete(null);
     }
   };
 
@@ -144,6 +180,14 @@ const MedicalSuppliesTable = () => {
    
     
         </div>
+        
+        <ConfirmDeleteDialog
+        isOpen={isConfirmDialogOpen}
+        onCancel={handleCancelDelete}
+        onConfirm={handleConfirmDelete}
+      />
+        
+
         </>
   );
 };

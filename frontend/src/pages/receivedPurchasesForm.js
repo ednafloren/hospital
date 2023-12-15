@@ -1,4 +1,3 @@
-// MedicineForm.js
 import '../styles/medicine.css'
 import {useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
@@ -44,13 +43,15 @@ export default function ReceivedPurchasesForm(){
       }
       const handleSuccess = () => {
         alert("This received purchase has been successfully created!");
-        // Redirect to the medicine categories table
+  
+        
         navigate('/medicinetable');
       };
 
     function InsertFOS(){
     const details = {
-        method: "POST", // or 'PUT'
+        method: "POST", 
+        
         headers: {
             "Content-Type": "application/json",
             'Accept': 'application/json',
@@ -70,7 +71,8 @@ export default function ReceivedPurchasesForm(){
         fetch('http://127.0.0.1:5000/received_purchases/create', details)
         .then((response) => response.json())
         .then((data) => {
-            // alert(data.message);
+          
+            
             console.log("Success:", data);
             handleSuccess();
         })
@@ -91,7 +93,8 @@ export default function ReceivedPurchasesForm(){
 
     <>
     
-    {/* <div id="mysection"> */}
+
+
     <div className="medicine-form">
             
                 
@@ -112,27 +115,8 @@ export default function ReceivedPurchasesForm(){
                             onChange={Changestatus}/>
                             
                         </div>
-                        <div class="form-group">
-                            {/* <!-- from fontawesome i will get the icons for the input labels --> */}
-                            <label >medical_supply_quantity: </label>
-                           
-                            <input type="text" required unit_price="medical_supply_quantity"
-                           
-                            value={medical_supply_quantity}
-                            onChange={medical_supply_quantity}/>
-                            
-                        </div>
-                   
-                        <div class="form-group">
-                            {/* <!-- from fontawesome i will get the icons for the input labels --> */}
-                            <label for="stock">medicine_quantity : </label>
-                            <input type="text" 
-                            required 
-                            name="medicine_quantity"
-                            value={medicine_quantity}
-                            onChange={Changemedicine_quantity}/>
-                            
-                        </div>
+                        
+                        
                         <div class="form-group">
                             {/* <!-- from fontawesome i will get the icons for the input labels --> */}
                             <label for="medicine_category_id">Stock ID: </label>
@@ -145,16 +129,15 @@ export default function ReceivedPurchasesForm(){
                             onChange={Changestock_id}/>
                             
                         </div>
-                      
-{/*                     
-                    </div> */}
+
+
                    
                 
                     <button id="button">Submit</button>
                 </form>
             </div>
-        {/* </div> */}
-    {/* </div> */}
+
+
 
     
     </>

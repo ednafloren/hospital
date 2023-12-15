@@ -5,11 +5,21 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    position: relative; /* Ensure relative positioning for absolute positioning of the totalItems */
+    position: relative; 
+    top: 20%;
+    bottom: 30%;
+    margin: 40px;
+    /* Ensure relative positioning for absolute positioning of the totalItems */
   }
-  
-  .lowStockReport h3 {
-    color: #333;
+  .stock{
+    margin-bottom: 50px;
+    margin-top: 60px;
+  }
+  .lowStockReport h2 {
+    color: #191919;
+    text-align: center;
+    text-decoration: underline;
+    padding-top: 20px;
   }
   
   .lowStockReport ul {
@@ -26,6 +36,10 @@
   .lowStockReport p {
     margin: 10px 0; /* Increased margin between key and value */
   }
+  .rephead{
+    text-align: center;
+    
+  }
   
   .generationTime {
     margin-top: 20px;
@@ -41,9 +55,10 @@
   /* Style for the totalItems */
   .totalItems {
     position: absolute;
-    bottom: 0;
-    right: 0;
+    bottom: 3%;
+    right: 3%;
     font-weight: bold;
-    margin: 0;
+    margin:70px;
+    font-size: 20px;
   }
   

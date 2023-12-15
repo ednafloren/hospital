@@ -1,6 +1,5 @@
-// MedicineForm.js
-// MedicineForm.js
-// MedicalItemEdit.js
+
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,6 +9,12 @@ const MedicalItemEdit = () => {
   const { itemId } = useParams();
   const navigate = useNavigate();
   const [itemDetails, setItemDetails] = useState(null);
+  const [tableData, setTableData] = useState([]);
+  const [error, setError] = useState(null);
+  const [items, setItems] = useState([]);
+  const [itemIdToDelete, setItemIdToDelete] = useState(null);
+  const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
+
   const [updatedItem, setUpdatedItem] = useState({
     name: '',
     medicine_category_id: 0,
@@ -44,11 +49,57 @@ const MedicalItemEdit = () => {
       }
     };
 
+
+    // delete
+    const handleDelete = (itemId) => {
+      // Set the item ID to delete in the state
+      setItemIdToDelete(itemId);
+      // Open the confirmation dialog
+      setConfirmDialogOpen(true);
+    };
+  
+    const handleCancelDelete = () => {
+      // Close the confirmation dialog
+      setConfirmDialogOpen(false);
+      // Reset the item ID to delete
+      setItemIdToDelete(null);
+    };
+  
+    const handleConfirmDelete = async () => {
+      try {
+        // Make API request to delete item on the server
+        const response = await fetch(`http://127.0.0.1:5000/medicines/delete/${itemIdToDelete}`, {
+          method: 'DELETE',
+          // Add headers if needed
+        });
+  
+        if (response.ok) {
+          // Update local state
+          const updatedItems = items.filter(item => item.id !== itemIdToDelete);
+          setItems(updatedItems);
+          console.log('Item deleted successfully');
+          
+          // Redirect to the medicine table after deletion
+          navigate('/medicineCategoryTable');
+        } else {
+          console.error('Error deleting item:', response.status);
+        }
+      } catch (error) {
+        console.error('Error deleting item:', error);
+      } finally {
+        // Close the confirmation dialog
+        setConfirmDialogOpen(false);
+        // Reset the item ID to delete
+        setItemIdToDelete(null);
+      }
+    };
+  
+
     fetchItemDetails();
   }, [itemId]);
 
   const handleClose = () => {
-    navigate('/medicinetable');
+    navigate('/medicineCategoryTable');
   };
 
   const handleChange = (e) => {
@@ -113,9 +164,9 @@ const MedicalItemEdit = () => {
           Category Id:
           <input
             type="number"
-            name=" medicine_category_id"
-            placeholder={itemDetails. medicine_category_id}
-            value={updatedItem. medicine_category_id}
+            name="medicine_category_id"
+            placeholder={itemDetails.medicine_category_id}
+            value={updatedItem.medicine_category_id}
             onChange={handleChange}
           />
         </label>
@@ -123,17 +174,17 @@ const MedicalItemEdit = () => {
           Unit Price:
           <input
             type="number"
-            name=" unit_price"
-            placeholder={itemDetails. unit_price}
-            value={updatedItem. unit_price}
+            name="unit_price"
+            placeholder={itemDetails.unit_price}
+            value={updatedItem.unit_price}
             onChange={handleChange}
           />
         </label>
         <label>
-          Unit Price:
+          Expiry Date:
           <input
             type="datetime-local"
-            name="  expiry_date"
+            name="expiry_date"
             placeholder={itemDetails.expiry_date}
             value={updatedItem.expiry_date}
             onChange={handleChange}

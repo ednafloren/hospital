@@ -222,9 +222,9 @@ export default function StockOrdersForm(){
                             onChange={Changemedical_supply_id}/>
                             
                         </div>
-                        <div class="form-group">
+                        {/* <div class="form-group">
                             {/* <!-- from fontawesome i will get the icons for the input labels --> */}
-                            <label for="medicine quantity">medicine_quantity: </label>
+                            {/* <label for="medicine quantity">medicine_quantity: </label>
                            
                            
                             <input type="text" 
@@ -236,13 +236,13 @@ export default function StockOrdersForm(){
                         </div>
                         <div class="form-group">
                             {/* <!-- from fontawesome i will get the icons for the input labels --> */}
-                            <label for="medical_supply_quantity"> medical supply quantity: </label>
+                            {/* <label for="medical_supply_quantity"> medical supply quantity: </label>
                      
                             <input type="text" required name="medical_supply_quantity"
                             value={medical_supply_quantity}
                             onChange={Changemedical_supply_quantity}/>
                             
-                        </div>
+                        </div>  */} 
 {/*                     
                     </div> */}
                    
@@ -250,8 +250,8 @@ export default function StockOrdersForm(){
                     <button id="button">Submit</button>
                 </form>
             </div>
-        {/* </div> */}
-    {/* </div> */}
+   
+   
 
     
     </>

@@ -17,19 +17,8 @@ import Heading from './pages/heading';
       
         <div className="App">
        
-           
-      <Sidenav/>
-      <main>
-
-        <Routes>
-     
-        <Route path="/" element={<Home />}/>
- 
-          <Route path="/medicine" element={<MedicineForm />} />
-          <Route path="/medicinesupplies" element={<MedicalSupplies />}/>
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
-      </main>
+    
+    
    
         </div>
       );

@@ -162,13 +162,15 @@ import { useState, useEffect } from 'react';
 import ConfirmDeleteDialog from '../components/confirmdelete';
 
 const MedicineTable = () => {
+   const navigate=useNavigate();
   const [tableData, setTableData] = useState([]);
   const [error, setError] = useState(null);
   const [items, setItems] = useState([]);
   const [itemIdToDelete, setItemIdToDelete] = useState(null);
   const [isConfirmDialogOpen, setConfirmDialogOpen] = useState(false);
 
-  // Initialize with your data
+
+  
   useEffect(() => {
     fetch('http://127.0.0.1:5000/medicines/')
       .then(response => {
@@ -196,14 +198,16 @@ const MedicineTable = () => {
     return <p>{error}</p>;
   }
 
+
+  
   const handleUpdateClick = async (itemId) => {
     try {
       const response = await fetch(`http://127.0.0.1:5000/medicines/get/${itemId}`);
-
+  
       if (response.ok) {
         const data = await response.json();
-        console.log('Fetched item details:', data);
-        // Redirect or navigate to the edit page
+        console.log('Fetched item details:', data);  // Log the response
+        navigate(`/edit/${itemId}`);
       } else {
         console.error('Error fetching item details:', response.status);
       }
@@ -233,12 +237,24 @@ const MedicineTable = () => {
         method: 'DELETE',
         // Add headers if needed
       });
-
+  
       if (response.ok) {
-        // Update local state
-        const updatedItems = items.filter(item => item.id !== itemIdToDelete);
-        setItems(updatedItems);
-        console.log('Item deleted successfully');
+        // Fetch updated data after successful deletion
+        const updatedDataResponse = await fetch('http://127.0.0.1:5000/medicines/');
+        if (updatedDataResponse.ok) {
+          const updatedData = await updatedDataResponse.json();
+          console.log('Updated Data:', updatedData);
+  
+          if (updatedData && updatedData.success && updatedData.data) {
+            // Update local state with the new data
+            setTableData(updatedData.data);
+            console.log('Item deleted successfully');
+          } else {
+            setError('Updated data structure is not as expected.');
+          }
+        } else {
+          console.error('Error fetching updated data:', updatedDataResponse.status);
+        }
       } else {
         console.error('Error deleting item:', response.status);
       }
@@ -251,7 +267,7 @@ const MedicineTable = () => {
       setItemIdToDelete(null);
     }
   };
-
+  
   return (
     <>
       <div className='space'>
@@ -282,8 +298,6 @@ const MedicineTable = () => {
             
 
 
-            <th>Updated At</th>
-            <th>Expiry Date</th>
             <th></th>
             <th></th>
 
@@ -338,7 +352,8 @@ const MedicineTable = () => {
      
       </div> 
       {/* ... Your table content ... */}
-<h1>heooiwahgjnkmds</h1>
+
+
       {/* Render the ConfirmDeleteDialog */}
       <ConfirmDeleteDialog
         isOpen={isConfirmDialogOpen}

@@ -1,11 +1,10 @@
-<<<<<<< HEAD
 import { useEffect, useState } from "react";
-=======
-import {useEffect, useState} from "react";
->>>>>>> b59e50532c9a067bb7b9ab612882ced7a1fe2dc8
 import { useNavigate } from "react-router-dom";
-
+import CloseIcon from '@mui/icons-material/Close';
+import SuccessModal from '../components/success'
 export default function MedicineForm() {
+  const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+
   const navigate = useNavigate();
   const [name, setname] = useState("");
   const [unit_price, setunitprice] = useState();
@@ -51,11 +50,11 @@ export default function MedicineForm() {
     console.log(formattedExpiryDate);
   }
 
-  const handleSuccess = () => {
-    alert("Successfully created!");
-    // Redirect to the medicine categories table
-    navigate('/medicinetable');
-  };
+  // const handleSuccess = () => {
+  //   alert("Successfully created!");
+  //   // Redirect to the medicine categories table
+  //   navigate('/medicinetable');
+  // };
 
   function InsertFOS() {
     console.log(JSON.stringify({ name, unit_price, image, stock, medicine_category_id, expiry_date }))
@@ -101,12 +100,26 @@ export default function MedicineForm() {
     e.preventDefault();
     InsertFOS();
   }
+  const handleClose = () => {
+    navigate('/medicineCategoryTable');
+  };
+
+
+  const handleSuccess = () => {
+    setSuccessModalOpen(true);
+  };
+  const closeSuccessModal = () => {
+    setSuccessModalOpen(false);
+  };
+
 
   return (
     <>
       <div className="medicine-form">
         <form onSubmit={(e) => handleSubmit(e)}>
-
+        <div className="close-icon-box" onClick={handleClose}>
+        <span className="close-icon"><CloseIcon /></span>
+      </div>
           <div className='medtitle'>
             <h2>Create A Medical Supply</h2>
           </div>
@@ -167,80 +180,16 @@ export default function MedicineForm() {
 
         </form>
       </div>
-<<<<<<< HEAD
+
+       {/* Conditionally render the success modal */}
+       {isSuccessModalOpen && (
+        <SuccessModal
+          message="Medicine Successfully added!"
+          onClose={closeSuccessModal}
+          redirectPath="/medicinetable"
+          delay={3000} // 3000 milliseconds (3 seconds)
+        />
+      )}
     </>
   )
 }
-=======
-      <form onSubmit={handleSubmit}>
-      <div className="form-group">
-          <label>Name:</label>
-          <input
-            type="text"
-            name="name"
-            value={medicine.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Category:</label>
-          <input
-            type="text"
-            name="category"
-            value={medicine.category}
-            onChange={handleChange}
-            required
-          />
-        </div>
-       
-        <div className="form-group">
-          <label>Unit Price:</label>
-          <input
-          type='number'
-            name="unitprice"
-            value={medicine.unitprice}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Stock:</label>
-          <input
-          type='number'
-            name="stock"
-            value={medicine.stock}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        
-        <div className="form-group">
-          <label>Expiry Date:</label>
-          <input
-          type='date'
-            name="expirydate"
-            value={medicine.expiry_date}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        {/* <div className="form-group">
-          <label>Image:</label>
-          <input
-          type='file'
-            name="image"
-            value={medicine.image}
-            onChange={handleChange}
-            required
-          />
-        </div>
-       */}
-        <div className='submitdiv'>
-          <button type="submit">Submit</button>
-        </div>
-      </form>
-    </div>
-  );
-};
->>>>>>> b59e50532c9a067bb7b9ab612882ced7a1fe2dc8

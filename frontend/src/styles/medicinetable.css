@@ -64,7 +64,7 @@ table {
   font-size: 25px;
  }
  button{
-    background-color: rgb(105, 105, 251);
+    /* background-color: rgb(105, 105, 251); */
     border: none;
     padding: 10px 20px;
  }

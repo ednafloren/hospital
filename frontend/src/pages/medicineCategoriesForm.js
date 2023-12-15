@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import '../styles/medicine.css'
+import CloseIcon from '@mui/icons-material/Close';
 
 import {useEffect} from "react";
 import { useNavigate } from "react-router-dom";
@@ -64,9 +65,14 @@ export default function MedicalSupplies(){
       
       }
 
-
+      const handleClose = () => {
+        navigate('/medicineCategoryTable');
+      };
 return (
     <div className="medicine-form">
+       <div className="close-icon-box" onClick={handleClose}>
+        <span className="close-icon"><CloseIcon /></span>
+      </div>
       <div className='medtitle'>
       <h2>Medicine Categories</h2></div>
       <form onSubmit={handleSubmit}>

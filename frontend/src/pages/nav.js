@@ -85,12 +85,12 @@ return (
         {/* <div className='notification-bar'>
         <p className='notification-text'>Total Notifications: {totalNotifications}</p>
       </div> */}
-          <img src="images/noticon.png" alt="logo" className="noteicon" />
+          {/* <img src="images/noticon.png" alt="logo" className="noteicon" />
           {(notificationCounts.expiredMedicineCount > 0 || notificationCounts.lowStockCount > 0) && (
             <span className="notification-badge">
               {notificationCounts.expiredMedicineCount + notificationCounts.lowStockCount}
-            </span>
-          )}
+            </span> */}
+          {/* )} */}
         </div>
         </div>
 <div className="logout">

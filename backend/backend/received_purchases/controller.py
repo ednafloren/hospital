@@ -29,8 +29,8 @@ def create_new_medicine():
 
     data = request.get_json()
     status = data['status']
-    medical_supply_quantity = data['medical_supply_quantity']
-    medicine_quantity= data['medicine_quantity']
+    # medical_supply_quantity = data['medical_supply_quantity']
+    # medicine_quantity= data['medicine_quantity']
     stock_order_id = data['stock_order_id']
     created_by =  get_jwt_identity()
       
@@ -40,10 +40,10 @@ def create_new_medicine():
         return jsonify({'error':"Stock purchase status is required"})
    
     
-    if not medical_supply_quantity:
-        return jsonify({'error':"The specofic received stock medical_supply_quantity is required"})
-    if not  medicine_quantity:
-        return jsonify({'error':"The specific received stock medicine is required"})
+    # if not medical_supply_quantity:
+    #     return jsonify({'error':"The specofic received stock medical_supply_quantity is required"})
+    # if not  medicine_quantity:
+    #     return jsonify({'error':"The specific received stock medicine is required"})
 
     if not  stock_order_id:
         return jsonify({'error':"The specific order id is required"})
